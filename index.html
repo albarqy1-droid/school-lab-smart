@@ -1,39 +1,35 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#123b50">
-<meta name="description" content="نظام إدارة المختبر المدرسي للمرحلة الثانوية - المسار العام - العام الدراسي 1448هـ">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>المختبر المدرسي الذكي</title>
 <style>
-:root{--navy:#123b50;--teal:#187d78;--bg:#f3f6f8;--ink:#19313e;--muted:#667985;--line:#e1e8ec;--card:#fff}
+:root{--navy:#123b50;--teal:#187d78;--bg:#f3f6f8;--ink:#19313e;--muted:#667985;--line:#e1e8ec}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif}
-header{background:linear-gradient(120deg,#123b50,#176b70);color:white;padding:22px max(18px,calc((100% - 1150px)/2))}
-header h1{margin:0 0 7px;font-size:23px}
+header{background:linear-gradient(120deg,#123b50,#176b70);color:white;padding:25px max(18px,calc((100% - 1150px)/2))}
+header h1{margin:0 0 8px;font-size:24px}
 header p{margin:0;color:#d6e7e9;font-size:13px}
 .wrap{max-width:1150px;margin:auto;padding:18px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:-4px}
-.stat,.panel,.tile{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:16px}
-.stat b{display:block;font-size:25px;color:var(--navy);margin-bottom:4px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat,.panel,.tile{background:white;border:1px solid var(--line);border-radius:15px;padding:16px}
+.stat b{display:block;font-size:25px;color:var(--navy);margin-bottom:5px}
 .stat span,.muted{font-size:12px;color:var(--muted)}
 .layout{display:grid;grid-template-columns:220px 1fr;gap:16px;margin-top:16px}
 .nav{display:flex;flex-direction:column;gap:7px;height:max-content;position:sticky;top:12px}
 .nav button{border:0;background:white;padding:12px;border-radius:10px;text-align:right;color:var(--ink);font:inherit;cursor:pointer}
 .nav button.active,.primary{background:var(--navy);color:white}
 .content{min-width:0}
-.panel h2{margin:0 0 7px;font-size:19px}
+.panel h2{margin:0 0 8px;font-size:19px}
 .panel h3{font-size:15px;margin:18px 0 10px}
 .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
 .tile{cursor:pointer;text-align:right}
 .tile strong{display:block;margin:8px 0 4px}
 .tile .ico{font-size:23px}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.row>*{flex:1}
+.row>*{flex:1;min-width:0}
 label{display:block;font-size:12px;color:var(--muted);margin:10px 0 5px}
 input,select,textarea{width:100%;padding:11px;border:1px solid #d5e0e5;border-radius:9px;background:white;font:inherit;color:var(--ink)}
 textarea{min-height:75px;resize:vertical}
@@ -49,15 +45,12 @@ button{font:inherit;cursor:pointer}
 .danger{background:#fdebed;color:#a43f4b}
 .success{background:#e8f5ed;color:#23724b}
 .hidden{display:none}
-.check{display:flex;gap:9px;align-items:flex-start;padding:8px 0;font-size:13px}
-.check input{width:auto;margin-top:3px}
 .foot{text-align:center;color:var(--muted);font-size:11px;padding:20px}
 .empty{padding:18px;text-align:center;color:var(--muted);background:#f7f9fa;border-radius:10px;font-size:13px}
 .actions{display:flex;gap:7px;flex-wrap:wrap}
 .actions button{padding:7px 10px;border:0;border-radius:8px}
 .delete-btn{background:#fdebed;color:#a43f4b;border:0;border-radius:8px;padding:8px 10px;margin:8px 5px 0 0}
 .download-btn{display:inline-block;background:#e9f3f2;color:#176b65;text-decoration:none;border-radius:8px;padding:8px 10px;margin:8px 5px 0 0}
-.source{font-size:11px;color:var(--muted);line-height:1.8}
 @media(max-width:760px){
 .stats{grid-template-columns:repeat(2,1fr)}
 .layout{grid-template-columns:1fr}
@@ -69,8 +62,7 @@ header h1{font-size:20px}
 }
 @media print{
 header,.nav,.no-print,.foot{display:none!important}
-.layout{display:block}
-.panel{border:0}
+.layout{display:block}.panel{border:0}
 .wrap{max-width:none;padding:0}
 body{background:white}
 }
@@ -84,6 +76,7 @@ body{background:white}
 <h1>🧪 المختبر المدرسي الذكي</h1>
 <p>إدارة مختبرات المرحلة الثانوية · المنهج السعودي · المسار العام · العام الدراسي 1448–1449هـ</p>
 </header>
+
 <main class="wrap">
 <section class="stats">
 <div class="stat"><b id="sPrep">0</b><span>التحضيرات المسجلة</span></div>
@@ -91,6 +84,7 @@ body{background:white}
 <div class="stat"><b id="sStock">0</b><span>أصناف المخزون</span></div>
 <div class="stat"><b>2</b><span>فصلان دراسيان</span></div>
 </section>
+
 <div class="layout">
 <nav class="nav no-print" id="nav">
 <button class="active" data-page="home">🏠 الرئيسية</button>
@@ -101,39 +95,40 @@ body{background:white}
 <button data-page="evidence">🗂️ ملف الشواهد</button>
 <button data-page="reports">📊 التقارير والطباعة</button>
 </nav>
+
 <section class="content">
 <div class="panel page" id="home">
 <h2>لوحة محضر المختبر</h2>
 <p class="muted">تابع تجهيز التجارب وسجلات المختبر من مكان واحد.</p>
 <div class="tiles">
 <div class="tile" data-go="plans"><span class="ico">📚</span><strong>الخطط الدراسية</strong><span class="muted">السنة والمواد والفصول</span></div>
-<div class="tile" data-go="experiments"><span class="ico">🧪</span><strong>التجارب العملية</strong><span class="muted">مكتبة التجارب وإجراءاتها</span></div>
+<div class="tile" data-go="experiments"><span class="ico">🧪</span><strong>التجارب العملية</strong><span class="muted">مكتبة التجارب</span></div>
 <div class="tile" data-go="prep"><span class="ico">🗓️</span><strong>التحضير اليومي</strong><span class="muted">تسجيل التجهيز ومتابعته</span></div>
 <div class="tile" data-go="stock"><span class="ico">📦</span><strong>المخزون</strong><span class="muted">الأدوات والكميات</span></div>
-<div class="tile" data-go="evidence"><span class="ico">🗂️</span><strong>ملف الشواهد</strong><span class="muted">إضافة وتنظيم شواهد العمل</span></div>
+<div class="tile" data-go="evidence"><span class="ico">🗂️</span><strong>ملف الشواهد</strong><span class="muted">إضافة وتنظيم الشواهد</span></div>
 <div class="tile" data-go="reports"><span class="ico">📊</span><strong>التقارير</strong><span class="muted">السجلات والطباعة</span></div>
 </div>
 <h3>آخر التحضيرات</h3>
 <div id="recent" class="list"></div>
-<p class="source">تنبيه: التجارب المعروضة نماذج أولية للتنظيم وليست حصراً رسمياً لكل تجارب كتب 1448هـ.</p>
+<p class="muted">التجارب الافتراضية أمثلة أولية، وتحتاج إلى مطابقتها مع كتب الطالب المعتمدة.</p>
 </div>
 
 <div class="panel page hidden" id="plans">
 <h2>الخطط الدراسية</h2>
-<p class="muted">اختر المستوى والفصل لربط التجارب بالمقرر.</p>
+<p class="muted">اختر السنة والفصل الدراسي.</p>
 <div class="row">
 <div><label>السنة</label><select id="planYear"><option>السنة الأولى المشتركة</option><option>السنة الثانية – المسار العام</option><option>السنة الثالثة – المسار العام</option></select></div>
 <div><label>الفصل الدراسي</label><select id="planTerm"><option>الفصل الأول</option><option>الفصل الثاني</option></select></div>
 </div>
-<h3>المقررات العلمية ذات الصلة</h3>
+<h3>المقررات العلمية</h3>
 <div class="list" id="courses"></div>
-<p class="source">تُستكمل أسماء الوحدات والتجارب بعد مطابقتها مع الكتب الدراسية المعتمدة.</p>
+<a href="https://www.moe.gov.sa/ar/education/general-education/study-plans" target="_blank" rel="noopener">الخطط الدراسية بوزارة التعليم</a>
 </div>
 
 <div class="panel page hidden" id="experiments">
 <h2>مكتبة التجارب العملية</h2>
 <details class="item">
-<summary><b>＋ إضافة تجربة جديدة إلى المكتبة</b></summary>
+<summary><b>＋ إضافة تجربة جديدة</b></summary>
 <form id="expForm">
 <label>اسم التجربة</label><input id="eName" required>
 <div class="row">
@@ -141,21 +136,22 @@ body{background:white}
 <div><label>السنة</label><select id="eYear"><option>السنة الأولى المشتركة</option><option>السنة الثانية – المسار العام</option><option>السنة الثالثة – المسار العام</option></select></div>
 </div>
 <label>الأدوات والمواد</label><textarea id="eTools"></textarea>
-<button class="btn primary" type="submit">حفظ التجربة في مكتبتي</button>
+<button class="btn primary" type="submit">حفظ التجربة</button>
 </form>
 </details>
+
 <div class="item" style="margin:12px 0">
 <b>📥 استيراد التجارب من ملف</b>
-<p class="muted">Word أو Excel أو PDF. يفضّل أن يكون المحتوى في جدول بعناوين واضحة.</p>
+<p class="muted">Word أو Excel أو PDF النصي.</p>
 <input type="file" id="experimentImportFile" accept=".docx,.xlsx,.xls,.pdf">
 <button class="btn secondary" type="button" onclick="importExperimentsFile()">استيراد التجارب</button>
 </div>
+
 <div class="row">
 <div><label>المادة</label><select id="filterSubject"><option value="الكل">كل المواد</option><option>الكيمياء</option><option>الفيزياء</option><option>الأحياء</option><option>علم البيئة</option><option>علوم الأرض والفضاء</option></select></div>
-<div><label>بحث</label><input id="expSearch" placeholder="اسم التجربة أو المهارة"></div>
+<div><label>بحث</label><input id="expSearch" placeholder="اسم التجربة"></div>
 </div>
 <div class="list" id="expList"></div>
-<p class="source">راجع خطوات التنفيذ والكميات ونشرات سلامة المواد مع دليل التجربة قبل التنفيذ.</p>
 </div>
 
 <div class="panel page hidden" id="prep">
@@ -169,16 +165,17 @@ body{background:white}
 <div><label>السنة</label><select id="pYear"><option>السنة الأولى المشتركة</option><option>السنة الثانية – المسار العام</option><option>السنة الثالثة – المسار العام</option></select></div>
 <div><label>المادة</label><select id="pSubject"><option>الكيمياء</option><option>الفيزياء</option><option>الأحياء</option><option>علم البيئة</option><option>علوم الأرض والفضاء</option></select></div>
 </div>
-<label>اسم التجربة / الدرس</label><input id="pName" required placeholder="اكتب اسم التجربة">
+<label>اسم التجربة / الدرس</label><input id="pName" required>
 <div class="row">
 <div><label>الحصة</label><select id="pPeriod"><option>الأولى</option><option>الثانية</option><option>الثالثة</option><option>الرابعة</option><option>الخامسة</option><option>السادسة</option><option>السابعة</option></select></div>
-<div><label>عدد المجموعات</label><input id="pGroups" type="number" min="1" value="1"></div>
+<div><label>عدد المجموعات</label><input type="number" id="pGroups" min="1" value="1"></div>
 </div>
 <label>الأدوات والمواد والكميات</label><textarea id="pMaterials"></textarea>
 <label>ملاحظات</label><textarea id="pNotes"></textarea>
 <button class="btn primary" type="submit">حفظ التحضير</button>
 </form>
-<h3>سجل التحضيرات</h3><div id="prepList" class="list"></div>
+<h3>سجل التحضيرات</h3>
+<div id="prepList" class="list"></div>
 </div>
 
 <div class="panel page hidden" id="stock">
@@ -190,37 +187,38 @@ body{background:white}
 </div>
 <div class="row">
 <div><label>الكمية</label><input id="iQty" type="number" min="0" required></div>
-<div><label>وحدة القياس</label><input id="iUnit" placeholder="قطعة، عبوة، لتر..."></div>
+<div><label>وحدة القياس</label><input id="iUnit" placeholder="قطعة، عبوة، لتر"></div>
 </div>
 <label>حد التنبيه عند النقص</label><input id="iMin" type="number" min="0" value="1">
 <button class="btn primary" type="submit">إضافة إلى المخزون</button>
 </form>
 <div class="item" style="margin-top:12px">
 <b>📥 استيراد ملف للمخزون</b>
-<p class="muted">Word أو Excel أو PDF.</p>
+<p class="muted">Word أو Excel أو PDF النصي.</p>
 <input type="file" id="stockImportFile" accept=".docx,.xlsx,.xls,.pdf">
 <button class="btn secondary" type="button" onclick="importStockFile()">استيراد المخزون</button>
 </div>
-<h3>سجل الأصناف</h3><div id="stockList" class="list"></div>
+<h3>سجل الأصناف</h3>
+<div id="stockList" class="list"></div>
 </div>
 
 <div class="panel page hidden" id="evidence">
 <h2>🗂️ ملف الشواهد</h2>
-<p class="muted">أضف شواهد أعمال المختبر واحفظ ملفاتها في هذا المتصفح، مع تصنيفها وتاريخها ووصف مختصر.</p>
+<p class="muted">أضف شواهد أعمال المختبر واحفظ ملفاتها في هذا المتصفح.</p>
 <form id="evidenceForm">
-<label>عنوان الشاهد</label><input id="evTitle" required placeholder="مثال: تجهيز تجربة الكيمياء">
+<label>عنوان الشاهد</label><input id="evTitle" required>
 <div class="row">
 <div><label>تصنيف الشاهد</label><select id="evType"><option>تجهيز التجارب</option><option>تنفيذ التجارب</option><option>السجلات والتنظيم</option><option>المخزون والعهد</option><option>التطوير المهني</option><option>أخرى</option></select></div>
 <div><label>التاريخ</label><input type="date" id="evDate" required></div>
 </div>
 <label>وصف الشاهد</label><textarea id="evNote"></textarea>
 <label>إرفاق ملف الشاهد</label><input type="file" id="evFile" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
-<p class="source">تُحفظ الملفات على نفس المتصفح والجهاز؛ احتفظ بنسخة خارجية منها.</p>
+<p class="muted">الملفات تحفظ محلياً على هذا المتصفح والجهاز.</p>
 <button class="btn primary" type="submit">حفظ الشاهد</button>
 </form>
 <h3>الشواهد المحفوظة</h3>
 <div class="row">
-<div><label>تصفية حسب التصنيف</label><select id="evFilter"><option value="الكل">كل الشواهد</option><option>تجهيز التجارب</option><option>تنفيذ التجارب</option><option>السجلات والتنظيم</option><option>المخزون والعهد</option><option>التطوير المهني</option><option>أخرى</option></select></div>
+<div><label>التصنيف</label><select id="evFilter"><option value="الكل">كل الشواهد</option><option>تجهيز التجارب</option><option>تنفيذ التجارب</option><option>السجلات والتنظيم</option><option>المخزون والعهد</option><option>التطوير المهني</option><option>أخرى</option></select></div>
 <div><label>بحث</label><input id="evSearch" placeholder="ابحث في الشواهد"></div>
 </div>
 <div id="evidenceList" class="list"></div>
@@ -232,37 +230,37 @@ body{background:white}
 <div class="stat"><b id="rTotal">0</b><span>إجمالي التحضيرات</span></div>
 <div class="stat"><b id="rComplete">0</b><span>تم التجهيز</span></div>
 </div>
-<h3>سجل التحضير</h3><div id="reportList" class="list"></div>
+<h3>سجل التحضير</h3>
+<div id="reportList" class="list"></div>
 <div class="actions no-print">
 <button class="btn primary" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
-<button class="btn secondary" id="exportBtn">⬇️ تصدير نسخة البيانات JSON</button>
-<label>استعادة نسخة احتياطية سابقة</label><input type="file" id="importFile" accept="application/json">
+<button class="btn secondary" id="exportBtn">⬇️ تصدير نسخة البيانات</button>
+<label>استعادة نسخة احتياطية</label><input type="file" id="importFile" accept="application/json">
 </div>
-<p class="source">البيانات محفوظة في متصفح هذا الجهاز فقط. استخدم تصدير البيانات للاحتفاظ بنسخة احتياطية.</p>
 </div>
 </section>
 </div>
-<div class="foot">المختبر المدرسي الذكي · نموذج أولي قابل للتطوير · الإصدار 0.2</div>
+<div class="foot">المختبر المدرسي الذكي · العام الدراسي 1448هـ</div>
 </main>
+
 <script>
 const $=id=>document.getElementById(id);
-const get=(k,d=[])=>{try{return JSON.parse(localStorage.getItem('lab_'+k))||d}catch{return d}};
+const get=(k,d=[])=>{try{return JSON.parse(localStorage.getItem('lab_'+k))??d}catch{return d}};
 const put=(k,v)=>localStorage.setItem('lab_'+k,JSON.stringify(v));
 
-let preps=get('preps'),stock=get('stock'),completed=get('completed',[]),customExperiments=get('experiments'),removedExperiments=get('removedExperiments',[]),evidence=get('evidence',[]);
+let preps=get('preps'),stock=get('stock'),completed=get('completed'),customExperiments=get('experiments'),evidence=get('evidence'),removedExperiments=get('removedExperiments');
 
 let experiments=[
-{n:'الكشف عن الأحماض والقواعد',s:'الكيمياء',y:'السنة الأولى المشتركة',tools:'ورق تباع الشمس أو كاشف معتمد، أوعية صغيرة، قطارات'},
-{n:'قياس الكثافة',s:'الفيزياء',y:'السنة الأولى المشتركة',tools:'ميزان، مخبار مدرج، عينات صلبة مناسبة، ماء'},
-{n:'فحص الخلايا بالمجهر',s:'الأحياء',y:'السنة الأولى المشتركة',tools:'مجهر ضوئي، شرائح، أغطية شرائح، عينات تعليمية'},
-{n:'دراسة النظام البيئي',s:'علم البيئة',y:'السنة الأولى المشتركة',tools:'عدسة مكبرة، سجل ملاحظات، أدوات قياس بسيطة'},
-{n:'استقصاء الحركة',s:'الفيزياء',y:'السنة الثانية – المسار العام',tools:'عربة تعليمية، مسار، ساعة توقيت، شريط قياس'},
-{n:'خواص المحاليل',s:'الكيمياء',y:'السنة الثانية – المسار العام',tools:'محاليل معتمدة، أوعية، أدوات قياس مناسبة'},
+{n:'الكشف عن الأحماض والقواعد',s:'الكيمياء',y:'السنة الأولى المشتركة',tools:'كواشف مناسبة، أوعية صغيرة، قطارات'},
+{n:'قياس الكثافة',s:'الفيزياء',y:'السنة الأولى المشتركة',tools:'ميزان، مخبار مدرج، عينات مناسبة'},
+{n:'فحص الخلايا بالمجهر',s:'الأحياء',y:'السنة الأولى المشتركة',tools:'مجهر ضوئي، شرائح، أغطية شرائح'},
+{n:'دراسة النظام البيئي',s:'علم البيئة',y:'السنة الأولى المشتركة',tools:'عدسة مكبرة، سجل ملاحظات'},
+{n:'استقصاء الحركة',s:'الفيزياء',y:'السنة الثانية – المسار العام',tools:'عربة تعليمية، مسار، ساعة توقيت'},
+{n:'خواص المحاليل',s:'الكيمياء',y:'السنة الثانية – المسار العام',tools:'محاليل تعليمية، أوعية، أدوات قياس'},
 {n:'نماذج الوراثة',s:'الأحياء',y:'السنة الثانية – المسار العام',tools:'بطاقات وراثية، أوراق تسجيل'},
-{n:'الصخور والمعادن',s:'علوم الأرض والفضاء',y:'السنة الثالثة – المسار العام',tools:'عينات صخور ومعادن، عدسة مكبرة، سجل'}
+{n:'الصخور والمعادن',s:'علوم الأرض والفضاء',y:'السنة الثالثة – المسار العام',tools:'عينات صخور ومعادن، عدسة مكبرة'}
 ];
-experiments=experiments.filter(x=>!removedExperiments.includes(x.n));
-experiments.push(...customExperiments.filter(x=>!removedExperiments.includes(x.n)));
+experiments=experiments.filter(x=>!removedExperiments.includes(x.n)).concat(customExperiments);
 
 const courses={
 'السنة الأولى المشتركة':['الكيمياء','الفيزياء','الأحياء','علم البيئة'],
@@ -270,9 +268,8 @@ const courses={
 'السنة الثالثة – المسار العام':['الفيزياء','علوم الأرض والفضاء','الكيمياء']
 };
 
-function esc(s){
-return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
 function page(p){
 document.querySelectorAll('.page').forEach(x=>x.classList.toggle('hidden',x.id!==p));
 document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===p));
@@ -288,24 +285,19 @@ $('sStock').textContent=stock.length;
 $('rTotal').textContent=preps.length;
 $('rComplete').textContent=completed.length;
 
-$('recent').innerHTML=preps.slice(0,4).map(p=>
-`<div class="item"><strong>${esc(p.name)}</strong><span class="muted">${esc(p.date)} · ${esc(p.subject)}</span></div>`
-).join('')||'<div class="empty">لا توجد تحضيرات مسجلة.</div>';
+$('recent').innerHTML=preps.slice(0,4).map(p=>`<div class="item"><strong>${esc(p.name)}</strong><span class="muted">${esc(p.date)} · ${esc(p.subject)}</span></div>`).join('')||'<div class="empty">لا توجد تحضيرات مسجلة.</div>';
 
 let y=$('planYear').value||'السنة الأولى المشتركة';
-$('courses').innerHTML=(courses[y]||[]).map(c=>
-`<div class="item"><strong>${esc(c)}</strong></div>`).join('');
+$('courses').innerHTML=(courses[y]||[]).map(c=>`<div class="item"><strong>${esc(c)}</strong></div>`).join('');
 
 let f=$('filterSubject').value,q=$('expSearch').value.trim();
-$('expList').innerHTML=experiments.filter(e=>
-(f==='الكل'||e.s===f)&&(!q||(e.n+e.s+e.y).includes(q))
-).map(e=>`
+$('expList').innerHTML=experiments.filter(e=>(f==='الكل'||e.s===f)&&(!q||(e.n+e.s+e.y).includes(q))).map(e=>`
 <div class="item">
 <strong>${esc(e.n)}</strong>
 <span class="tag">${esc(e.s)}</span>
 <p class="muted">${esc(e.y)}</p>
 <p class="muted"><b>الأدوات والمواد:</b> ${esc(e.tools||'غير محددة')}</p>
-<button class="btn secondary" onclick="useExp(${experiments.indexOf(e)})">إنشاء تحضير لهذه التجربة</button>
+<button class="btn secondary" onclick="useExp(${experiments.indexOf(e)})">إنشاء تحضير للتجربة</button>
 <button class="delete-btn" onclick="deleteExperiment(${experiments.indexOf(e)})">🗑️ حذف التجربة</button>
 </div>`).join('')||'<div class="empty">لا توجد نتائج.</div>';
 
@@ -318,7 +310,7 @@ $('stockList').innerHTML=stock.map((x,i)=>`
 <p class="muted">الكمية: ${x.qty} ${esc(x.unit)} · حد التنبيه: ${x.min}</p>
 ${x.qty<=x.min?'<span class="tag danger">كمية منخفضة</span>':''}
 <button class="btn secondary" onclick="delStock(${i})">حذف الصنف</button>
-</div>`).join('')||'<div class="empty">لم تتم إضافة أصناف.</div>';
+</div>`).join('')||'<div class="empty">لا توجد أصناف.</div>';
 
 renderEvidence();
 }
@@ -335,23 +327,16 @@ return `<div class="item">
 }
 
 window.deleteExperiment=i=>{
-let e=experiments[i];
-if(!e)return;
-if(!confirm('هل أنت متأكد من حذف التجربة: '+e.n+'؟'))return;
-removedExperiments.push(e.n);
-put('removedExperiments',removedExperiments);
-customExperiments=customExperiments.filter(x=>x.n!==e.n);
-put('experiments',customExperiments);
-experiments.splice(i,1);
-render();
+let e=experiments[i];if(!e)return;
+if(!confirm('هل تريد حذف التجربة: '+e.n+'؟'))return;
+removedExperiments.push(e.n);put('removedExperiments',removedExperiments);
+customExperiments=customExperiments.filter(x=>x.n!==e.n);put('experiments',customExperiments);
+experiments.splice(i,1);render();
 };
 
 window.useExp=i=>{
 let e=experiments[i];
-$('pName').value=e.n;
-$('pSubject').value=e.s;
-$('pYear').value=e.y;
-$('pMaterials').value=e.tools||'';
+$('pName').value=e.n;$('pSubject').value=e.s;$('pYear').value=e.y;$('pMaterials').value=e.tools||'';
 page('prep');
 };
 
@@ -360,130 +345,156 @@ completed=completed.includes(id)?completed.filter(x=>x!==id):[...completed,id];
 put('completed',completed);render();
 };
 window.delPrep=id=>{
-if(!confirm('هل تريد حذف هذا التحضير؟'))return;
-preps=preps.filter(x=>x.id!==id);
-completed=completed.filter(x=>x!==id);
+if(!confirm('هل تريد حذف التحضير؟'))return;
+preps=preps.filter(x=>x.id!==id);completed=completed.filter(x=>x!==id);
 put('preps',preps);put('completed',completed);render();
 };
 window.delStock=i=>{
-if(!confirm('هل تريد حذف هذا الصنف؟'))return;
+if(!confirm('هل تريد حذف الصنف؟'))return;
 stock.splice(i,1);put('stock',stock);render();
 };
 
 $('prepForm').onsubmit=e=>{
 e.preventDefault();
 let p={
-id:Date.now().toString(),
-date:$('pDate').value,
-term:$('pTerm').value,
-year:$('pYear').value,
-subject:$('pSubject').value,
-name:$('pName').value,
-period:$('pPeriod').value,
-groups:$('pGroups').value,
-materials:$('pMaterials').value,
-notes:$('pNotes').value
+id:Date.now().toString(),date:$('pDate').value,term:$('pTerm').value,
+year:$('pYear').value,subject:$('pSubject').value,name:$('pName').value,
+period:$('pPeriod').value,groups:$('pGroups').value,
+materials:$('pMaterials').value,notes:$('pNotes').value
 };
-preps.unshift(p);put('preps',preps);
-e.target.reset();
+preps.unshift(p);put('preps',preps);e.target.reset();
 $('pDate').value=new Date().toISOString().slice(0,10);
 render();alert('تم حفظ التحضير.');
 };
 
 $('stockForm').onsubmit=e=>{
 e.preventDefault();
-stock.push({
-name:$('iName').value,
-type:$('iType').value,
-qty:+$('iQty').value,
-unit:$('iUnit').value,
-min:+$('iMin').value
-});
+stock.push({name:$('iName').value,type:$('iType').value,qty:+$('iQty').value,unit:$('iUnit').value,min:+$('iMin').value});
 put('stock',stock);e.target.reset();render();
 };
 
 $('expForm').onsubmit=e=>{
 e.preventDefault();
-let x={
-n:$('eName').value,
-s:$('eSubject').value,
-y:$('eYear').value,
-tools:$('eTools').value
+let x={n:$('eName').value,s:$('eSubject').value,y:$('eYear').value,tools:$('eTools').value,custom:true};
+customExperiments.push(x);experiments.push(x);put('experiments',customExperiments);
+e.target.reset();render();alert('تمت إضافة التجربة.');
 };
-customExperiments.push(x);
-experiments.push(x);
-put('experiments',customExperiments);
-e.target.reset();render();
-alert('تمت إضافة التجربة.');
-};
-
-$('filterSubject').onchange=render;
-$('expSearch').oninput=render;
-$('planYear').onchange=render;
-$('planTerm').onchange=render;
 
 function renderEvidence(){
-let filter=$('evFilter').value;
-let query=$('evSearch').value.trim().toLowerCase();
-let arr=evidence.filter(x=>(filter==='الكل'||x.type===filter)&&
-(!query||(x.title+' '+x.note+' '+x.type).toLowerCase().includes(query)));
+let f=$('evFilter').value,q=$('evSearch').value.toLowerCase();
+let arr=evidence.filter(x=>(f==='الكل'||x.type===f)&&(!q||(x.title+' '+x.note+' '+x.type).toLowerCase().includes(q)));
 $('evidenceList').innerHTML=arr.map(x=>`
 <div class="item">
-<strong>${esc(x.title)}</strong>
-<span class="tag">${esc(x.type)}</span>
+<strong>${esc(x.title)}</strong><span class="tag">${esc(x.type)}</span>
 <p class="muted">${esc(x.date)} · ${esc(x.fileName||'بدون مرفق')}</p>
 <p>${esc(x.note||'')}</p>
 ${x.data?`<a class="download-btn" href="${x.data}" download="${esc(x.fileName)}">⬇️ تنزيل المرفق</a>`:''}
 <button class="delete-btn" onclick="deleteEvidence('${x.id}')">🗑️ حذف الشاهد</button>
-</div>`).join('')||'<div class="empty">لا توجد شواهد محفوظة.</div>';
+</div>`).join('')||'<div class="empty">لا توجد شواهد.</div>';
 }
+
 window.deleteEvidence=id=>{
-if(!confirm('هل تريد حذف هذا الشاهد ومرفقه؟'))return;
-evidence=evidence.filter(x=>x.id!==id);
-put('evidence',evidence);renderEvidence();
+if(!confirm('هل تريد حذف الشاهد ومرفقه؟'))return;
+evidence=evidence.filter(x=>x.id!==id);put('evidence',evidence);renderEvidence();
 };
+
 $('evidenceForm').onsubmit=async e=>{
 e.preventDefault();
-let file=$('evFile').files[0];
-let data='';
+let file=$('evFile').files[0],data='';
 if(file){
-if(file.size>1500000){alert('حجم الملف أكبر من 1.5 ميجابايت. يرجى تصغيره قبل الإرفاق.');return;}
+if(file.size>1500000){alert('حجم الملف أكبر من 1.5 ميجابايت.');return;}
 data=await new Promise((resolve,reject)=>{
-let reader=new FileReader();
-reader.onload=()=>resolve(reader.result);
-reader.onerror=reject;
-reader.readAsDataURL(file);
+let r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);
 });
 }
-evidence.unshift({
-id:Date.now().toString(),
-title:$('evTitle').value,
-type:$('evType').value,
-date:$('evDate').value,
-note:$('evNote').value,
-fileName:file?file.name:'',
-data
-});
-try{
-put('evidence',evidence);
-e.target.reset();renderEvidence();
-alert('تم حفظ الشاهد.');
-}catch(err){
-evidence.shift();
-alert('تعذر الحفظ. قد تكون مساحة التخزين في المتصفح ممتلئة.');
-}
+let item={id:Date.now().toString(),title:$('evTitle').value,type:$('evType').value,date:$('evDate').value,note:$('evNote').value,fileName:file?file.name:'',data};
+evidence.unshift(item);
+try{put('evidence',evidence);e.target.reset();$('evDate').value=new Date().toISOString().slice(0,10);renderEvidence();alert('تم حفظ الشاهد.');}
+catch(err){evidence.shift();alert('تعذر الحفظ، قد تكون مساحة التخزين ممتلئة.');}
 };
+
 $('evFilter').onchange=renderEvidence;
 $('evSearch').oninput=renderEvidence;
 
+function importNorm(v){return String(v??'').trim().replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/[ًٌٍَُِّْـ]/g,'').replace(/\s+/g,' ').toLowerCase();}
+function importPick(o,keys){for(const k of Object.keys(o)){if(keys.includes(importNorm(k)))return String(o[k]??'').trim();}return '';}
+function importTable(rows){
+if(!rows||rows.length<2)return [];
+let h=rows[0].map(importNorm);
+return rows.slice(1).filter(r=>r.some(v=>String(v??'').trim())).map(r=>Object.fromEntries(h.map((k,i)=>[k,r[i]??''])));
+}
+function importTextRows(txt){
+let rows=String(txt||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean).map(x=>x.split(/[\t|؛;]/).map(y=>y.trim())).filter(x=>x.length>1);
+return importTable(rows);
+}
+async function readImportFile(file){
+let ext=file.name.split('.').pop().toLowerCase();
+if(['xlsx','xls'].includes(ext)){
+if(!window.XLSX)throw Error('تعذر تحميل مكتبة Excel.');
+let wb=XLSX.read(await file.arrayBuffer(),{type:'array'});
+return wb.SheetNames.flatMap(n=>importTable(XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,defval:''})));
+}
+if(ext==='docx'){
+if(!window.mammoth)throw Error('تعذر تحميل مكتبة Word.');
+let ab=await file.arrayBuffer(),html=await mammoth.convertToHtml({arrayBuffer:ab});
+let doc=new DOMParser().parseFromString(html.value,'text/html'),out=[];
+doc.querySelectorAll('table').forEach(t=>out.push(...importTable([...t.querySelectorAll('tr')].map(tr=>[...tr.querySelectorAll('th,td')].map(c=>c.textContent.trim())))));
+if(out.length)return out;
+return importTextRows((await mammoth.extractRawText({arrayBuffer:ab})).value);
+}
+if(ext==='pdf'){
+if(!window.pdfjsLib)throw Error('تعذر تحميل قارئ PDF.');
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+let pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise,txt='';
+for(let n=1;n<=pdf.numPages;n++){
+let c=await(await pdf.getPage(n)).getTextContent();
+let line='';for(let it of c.items)line+=it.str+(it.hasEOL?'\n':' ');
+txt+=line+'\n';
+}
+return importTextRows(txt);
+}
+throw Error('الصيغ المدعومة DOCX وXLSX وXLS وPDF.');
+}
+
+window.importExperimentsFile=async()=>{
+let el=$('experimentImportFile'),f=el.files[0];
+if(!f){alert('اختر ملف التجارب أولاً.');return;}
+try{
+let rows=await readImportFile(f),add=[];
+for(let r of rows){
+let n=importPick(r,['اسم التجربه','التجربه','اسم النشاط','العنوان']);
+if(n)add.push({n,s:importPick(r,['الماده','المقرر'])||'الكيمياء',y:importPick(r,['السنه','الصف','المستوى'])||'السنة الأولى المشتركة',tools:importPick(r,['الادوات والمواد','الادوات','المواد والادوات','المواد']),custom:true});
+}
+if(!add.length)throw Error('لم يتم العثور على تجارب. استخدم أعمدة: اسم التجربة، المادة، السنة، الأدوات والمواد.');
+if(!confirm('تم العثور على '+add.length+' تجربة. هل تريد إضافتها؟'))return;
+customExperiments.push(...add);put('experiments',customExperiments);
+experiments=experiments.filter(x=>!x.custom).concat(customExperiments);
+render();alert('تم استيراد '+add.length+' تجربة.');el.value='';
+}catch(e){alert('تعذر الاستيراد: '+e.message+'\nملفات PDF المصورة تحتاج إلى OCR.');}
+};
+
+window.importStockFile=async()=>{
+let el=$('stockImportFile'),f=el.files[0];
+if(!f){alert('اختر ملف المخزون أولاً.');return;}
+try{
+let rows=await readImportFile(f),add=[];
+for(let r of rows){
+let n=importPick(r,['اسم الصنف','الصنف','اسم الماده','اسم الاداه','الاداه']);
+if(n){
+let q=importPick(r,['الكميه','الرصيد','عدد']);
+add.push({name:n,type:importPick(r,['التصنيف','النوع'])||'أدوات عامة',qty:Number(String(q||0).replace(/[^0-9.\-]/g,''))||0,unit:importPick(r,['الوحده','وحده القياس'])||'قطعة',min:Number(importPick(r,['حد التنبيه','الحد الادنى'])||1)});
+}
+}
+if(!add.length)throw Error('لم يتم العثور على أصناف. استخدم أعمدة: اسم الصنف، التصنيف، الكمية، الوحدة، حد التنبيه.');
+if(!confirm('تم العثور على '+add.length+' صنفاً. هل تريد إضافتها؟'))return;
+stock.push(...add);put('stock',stock);render();alert('تم استيراد '+add.length+' صنفاً.');el.value='';
+}catch(e){alert('تعذر الاستيراد: '+e.message+'\nملفات PDF المصورة تحتاج إلى OCR.');}
+};
+
 $('exportBtn').onclick=()=>{
-let data={preps,stock,completed,experiments:customExperiments,removedExperiments,evidence};
+let data={preps,stock,completed,experiments:customExperiments,evidence,removedExperiments};
 let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-let a=document.createElement('a');
-a.href=URL.createObjectURL(blob);
-a.download='school-lab-backup.json';
-a.click();
-URL.revokeObjectURL(a.href);
+let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='school-lab-backup.json';a.click();URL.revokeObjectURL(a.href);
 };
 
 $('importFile').onchange=async e=>{
@@ -491,118 +502,18 @@ let f=e.target.files[0];if(!f)return;
 try{
 let d=JSON.parse(await f.text());
 if(!Array.isArray(d.preps)||!Array.isArray(d.stock))throw Error();
-preps=d.preps;stock=d.stock;
-completed=d.completed||[];
-customExperiments=d.experiments||[];
-removedExperiments=d.removedExperiments||[];
-evidence=d.evidence||[];
-['preps','stock','completed','experiments','removedExperiments','evidence'].forEach(k=>
-put(k,{preps,stock,completed,experiments:customExperiments,removedExperiments,evidence}[k])
-);
-experiments=experiments.filter(x=>!removedExperiments.includes(x.n)).concat(customExperiments.filter(x=>!removedExperiments.includes(x.n)));
-render();alert('تمت استعادة البيانات.');
+preps=d.preps;stock=d.stock;completed=d.completed||[];
+customExperiments=d.experiments||[];evidence=d.evidence||[];removedExperiments=d.removedExperiments||[];
+['preps','stock','completed','experiments','evidence','removedExperiments'].forEach(k=>put(k,{preps,stock,completed,experiments:customExperiments,evidence,removedExperiments}[k]));
+experiments=experiments.filter(x=>!x.custom&&!removedExperiments.includes(x.n)).concat(customExperiments);
+render();alert('تم استعادة البيانات.');
 }catch(err){alert('ملف النسخة الاحتياطية غير صالح.');}
 };
 
-function norm(v){
-return String(v??'').trim().replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/[ًٌٍَُِّْـ]/g,'').replace(/\s+/g,' ').toLowerCase();
-}
-function pick(o,keys){
-for(const k of Object.keys(o)){if(keys.includes(norm(k)))return String(o[k]??'').trim();}
-return '';
-}
-function tableRows(rows){
-if(!rows||rows.length<2)return [];
-let headers=rows[0].map(norm);
-return rows.slice(1).filter(r=>r.some(v=>String(v??'').trim()))
-.map(r=>Object.fromEntries(headers.map((h,i)=>[h,r[i]??''])));
-}
-function textRows(txt){
-let rows=String(txt||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean)
-.map(x=>x.split(/[\t|؛;]/).map(y=>y.trim())).filter(x=>x.length>1);
-return tableRows(rows);
-}
-async function readFile(file){
-let ext=file.name.split('.').pop().toLowerCase();
-if(['xlsx','xls'].includes(ext)){
-if(!window.XLSX)throw Error('تعذر تحميل مكتبة Excel. تحقق من الإنترنت.');
-let wb=XLSX.read(await file.arrayBuffer(),{type:'array'});
-return wb.SheetNames.flatMap(n=>tableRows(XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,defval:''})));
-}
-if(ext==='docx'){
-if(!window.mammoth)throw Error('تعذر تحميل مكتبة Word. تحقق من الإنترنت.');
-let ab=await file.arrayBuffer();
-let html=await mammoth.convertToHtml({arrayBuffer:ab});
-let doc=new DOMParser().parseFromString(html.value,'text/html');
-let out=[];
-doc.querySelectorAll('table').forEach(t=>out.push(...tableRows([...t.querySelectorAll('tr')].map(tr=>[...tr.querySelectorAll('th,td')].map(c=>c.textContent.trim())))));
-if(out.length)return out;
-return textRows((await mammoth.extractRawText({arrayBuffer:ab})).value);
-}
-if(ext==='pdf'){
-if(!window.pdfjsLib)throw Error('تعذر تحميل قارئ PDF. تحقق من الإنترنت.');
-pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-let pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
-let txt='';
-for(let n=1;n<=pdf.numPages;n++){
-let c=await(await pdf.getPage(n)).getTextContent();
-let line='';
-for(let it of c.items)line+=it.str+(it.hasEOL?'\n':' ');
-txt+=line+'\n';
-}
-return textRows(txt);
-}
-throw Error('الصيغ المدعومة: DOCX وXLSX وXLS وPDF');
-}
-
-window.importExperimentsFile=async()=>{
-let el=$('experimentImportFile'),f=el.files[0];
-if(!f){alert('اختر ملف التجارب أولاً.');return;}
-try{
-let rows=await readFile(f),add=[];
-for(let r of rows){
-let n=pick(r,['اسم التجربه','التجربه','اسم النشاط','العنوان']);
-if(n)add.push({
-n,s:pick(r,['الماده','المقرر'])||'الكيمياء',
-y:pick(r,['السنه','الصف','المستوى'])||'السنة الأولى المشتركة',
-tools:pick(r,['الادوات والمواد','الادوات','المواد والادوات','المواد'])
-});
-}
-if(!add.length)throw Error('لم يتم العثور على تجارب. استخدم أعمدة: اسم التجربة، المادة، السنة، الأدوات والمواد.');
-if(!confirm('تم العثور على '+add.length+' تجربة. هل تريد إضافتها؟'))return;
-customExperiments.push(...add);
-put('experiments',customExperiments);
-experiments=experiments.filter(x=>!removedExperiments.includes(x.n)).concat(add);
-render();alert('تم استيراد '+add.length+' تجربة بنجاح.');
-el.value='';
-}catch(e){alert('تعذر الاستيراد: '+e.message+'\nملفات PDF المصورة تحتاج إلى OCR أولاً.');}
-};
-
-window.importStockFile=async()=>{
-let el=$('stockImportFile'),f=el.files[0];
-if(!f){alert('اختر ملف المخزون أولاً.');return;}
-try{
-let rows=await readFile(f),add=[];
-for(let r of rows){
-let n=pick(r,['اسم الصنف','الصنف','اسم الماده','اسم الاداه','الاداه']);
-if(n){
-let q=pick(r,['الكميه','الرصيد','عدد']);
-add.push({
-name:n,type:pick(r,['التصنيف','النوع'])||'أدوات عامة',
-qty:Number(String(q||0).replace(/[^0-9.\-]/g,''))||0,
-unit:pick(r,['الوحده','وحده القياس'])||'قطعة',
-min:Number(pick(r,['حد التنبيه','الحد الادنى'])||1)
-});
-}
-}
-if(!add.length)throw Error('لم يتم العثور على أصناف. استخدم أعمدة: اسم الصنف، التصنيف، الكمية، الوحدة، حد التنبيه.');
-if(!confirm('تم العثور على '+add.length+' صنفاً. هل تريد إضافتها؟'))return;
-stock.push(...add);put('stock',stock);render();
-alert('تم استيراد '+add.length+' صنفاً بنجاح.');
-el.value='';
-}catch(e){alert('تعذر الاستيراد: '+e.message+'\nملفات PDF المصورة تحتاج إلى OCR أولاً.');}
-};
-
+$('filterSubject').onchange=render;
+$('expSearch').oninput=render;
+$('planYear').onchange=render;
+$('planTerm').onchange=render;
 $('pDate').value=new Date().toISOString().slice(0,10);
 $('evDate').value=new Date().toISOString().slice(0,10);
 render();
