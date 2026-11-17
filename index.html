@@ -49,8 +49,6 @@ button{font:inherit;cursor:pointer}
 .danger{background:#fdebed;color:#a43f4b}
 .success{background:#e8f5ed;color:#23724b}
 .hidden{display:none!important}
-.check{display:flex;gap:9px;align-items:flex-start;padding:8px 0;font-size:13px}
-.check input{width:auto;margin-top:3px}
 .foot{text-align:center;color:var(--muted);font-size:11px;padding:20px}
 .empty{padding:18px;text-align:center;color:var(--muted);background:#f7f9fa;border-radius:10px;font-size:13px}
 .actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
@@ -103,7 +101,6 @@ body{background:white}
 <button data-page="experiments">🧪 التجارب العملية</button>
 <button data-page="prep">🗓️ التحضير اليومي</button>
 <button data-page="stock">📦 المخزون</button>
-<button data-page="safety">🛡️ السلامة</button>
 <button data-page="reports">📊 التقارير والطباعة</button>
 </nav>
 
@@ -115,10 +112,9 @@ body{background:white}
 
 <div class="tiles">
 <div class="tile" data-go="plans"><span class="ico">📚</span><strong>الخطط الدراسية</strong><span class="muted">السنة والمواد والفصول</span></div>
-<div class="tile" data-go="experiments"><span class="ico">🧪</span><strong>التجارب العملية</strong><span class="muted">مكتبة التجارب وإجراءاتها</span></div>
+<div class="tile" data-go="experiments"><span class="ico">🧪</span><strong>التجارب العملية</strong><span class="muted">مكتبة التجارب وأدواتها</span></div>
 <div class="tile" data-go="prep"><span class="ico">🗓️</span><strong>التحضير اليومي</strong><span class="muted">تسجيل التجهيز ومتابعته</span></div>
 <div class="tile" data-go="stock"><span class="ico">📦</span><strong>المخزون</strong><span class="muted">الأدوات والكميات</span></div>
-<div class="tile" data-go="safety"><span class="ico">🛡️</span><strong>السلامة</strong><span class="muted">قوائم التحقق والتنبيهات</span></div>
 <div class="tile" data-go="reports"><span class="ico">📊</span><strong>التقارير</strong><span class="muted">السجلات والطباعة</span></div>
 </div>
 
@@ -180,10 +176,7 @@ body{background:white}
 </select></div>
 </div>
 
-<label>الهدف</label><textarea id="eGoal"></textarea>
 <label>الأدوات والمواد</label><textarea id="eTools"></textarea>
-<label>خطوات التنفيذ</label><textarea id="eSteps"></textarea>
-<label>احتياطات السلامة</label><textarea id="eRisk"></textarea>
 <button class="btn primary" type="submit">حفظ التجربة في مكتبتي</button>
 </form>
 </details>
@@ -194,11 +187,11 @@ body{background:white}
 <option value="الكل">كل المواد</option>
 <option>الكيمياء</option><option>الفيزياء</option><option>الأحياء</option><option>علم البيئة</option><option>علوم الأرض والفضاء</option>
 </select></div>
-<div><label>بحث</label><input id="expSearch" placeholder="اسم التجربة أو الهدف"></div>
+<div><label>بحث</label><input id="expSearch" placeholder="اسم التجربة"></div>
 </div>
 
 <div class="list" id="expList"></div>
-<p class="source">راجع خطوات التنفيذ والكميات والمخاطر مع كتاب الطالب ودليل التجارب ونشرة بيانات سلامة المادة قبل التنفيذ.</p>
+<p class="source">تُراجع الأدوات والمواد مع كتاب الطالب ودليل التجارب قبل تجهيز التجربة.</p>
 </div>
 
 <div class="panel page hidden" id="prep">
@@ -236,7 +229,6 @@ body{background:white}
 </div>
 
 <label>الأدوات والمواد والكميات</label><textarea id="pMaterials"></textarea>
-<label>إجراءات السلامة والتجهيز</label><textarea id="pSafety"></textarea>
 <label>ملاحظات</label><textarea id="pNotes"></textarea>
 <button class="btn primary" type="submit">حفظ التحضير</button>
 </form>
@@ -262,26 +254,13 @@ body{background:white}
 <div><label>وحدة القياس</label><input id="iUnit" placeholder="قطعة، عبوة، لتر..."></div>
 </div>
 
-<div class="row">
 <div><label>حد التنبيه عند النقص</label><input id="iMin" type="number" min="0" step="any" value="1"></div>
-<div><label>تاريخ الصلاحية</label><input id="iExpiry" type="date"></div>
-</div>
 
 <button class="btn primary" type="submit">إضافة إلى المخزون</button>
 </form>
 
 <h3>سجل الأصناف</h3>
 <div id="stockList" class="list"></div>
-</div>
-
-<div class="panel page hidden" id="safety">
-<h2>قائمة التحقق من السلامة</h2>
-<p class="muted">ضع علامة بعد التأكد الفعلي قبل بدء التجربة. تحفظ العلامات على هذا الجهاز.</p>
-<div id="safetyChecks"></div>
-<button class="btn secondary no-print" id="resetSafety">إعادة ضبط القائمة</button>
-<div class="item warn" style="margin-top:12px">
-لا تُنفذ أي تجربة قبل تقييم مخاطرها وقراءة ملصق المادة ونشرة بيانات السلامة (SDS)، وتحديد معدات الوقاية والتخلص من النفايات وفق تعليمات المدرسة.
-</div>
 </div>
 
 <div class="panel page hidden" id="reports">
@@ -315,7 +294,7 @@ body{background:white}
 'use strict';
 
 const $=id=>document.getElementById(id);
-const KEYS=['preps','stock','completed','experiments','safety'];
+const KEYS=['preps','stock','completed','experiments'];
 
 function get(k,d=[]){
  try{
@@ -338,7 +317,6 @@ let preps=get('preps');
 let stock=get('stock');
 let completed=get('completed');
 let customExperiments=get('experiments');
-let safetyState=get('safety',{});
 
 if(!Array.isArray(preps))preps=[];
 if(!Array.isArray(stock))stock=[];
@@ -346,14 +324,14 @@ if(!Array.isArray(completed))completed=[];
 if(!Array.isArray(customExperiments))customExperiments=[];
 
 const baseExperiments=[
-{n:'الكشف عن الأحماض والقواعد',s:'الكيمياء',y:'السنة الأولى المشتركة',t:'نموذج إثرائي',goal:'تمييز طبيعة بعض المحاليل باستخدام كاشف مناسب.',tools:'ورق تباع الشمس أو كاشف معتمد، أوعية صغيرة، قطارات، نظارات واقية.',steps:'تُتبع خطوات دليل التجربة المدرسي المعتمد مع استخدام كميات صغيرة وتجنب الملامسة أو التذوق.',risk:'تحديد الكواشف وتركيزاتها من ملصق العبوة ونشرة SDS؛ يمنع خلط مواد مجهولة.'},
-{n:'قياس الكثافة',s:'الفيزياء',y:'السنة الأولى المشتركة',t:'نموذج إثرائي',goal:'حساب الكثافة من قياس الكتلة والحجم.',tools:'ميزان، مخبار مدرج، عينات آمنة، ماء.',steps:'قياس الكتلة، تحديد الحجم بالطريقة المناسبة، ثم حساب الكثافة ومقارنة النتائج.',risk:'تجفيف الانسكابات وإبعاد الأجهزة الكهربائية عن الماء.'},
-{n:'فحص الخلايا بالمجهر',s:'الأحياء',y:'السنة الأولى المشتركة',t:'نموذج إثرائي',goal:'ملاحظة تراكيب خلوية باستخدام المجهر الضوئي.',tools:'مجهر، شرائح وأغطية، عينة تعليمية معتمدة، أدوات تحضير.',steps:'تحضير الشريحة وفق الدليل، البدء بالتكبير الأقل، ثم ضبط التركيز تدريجياً.',risk:'التعامل بحذر مع الشرائح الزجاجية والتخلص من المكسور في حاوية مخصصة.'},
-{n:'ملاحظة النظام البيئي',s:'علم البيئة',y:'السنة الأولى المشتركة',t:'نشاط عملي مقترح',goal:'رصد مكونات حية وغير حية وعلاقاتها.',tools:'عدسة مكبرة، سجل ملاحظات، أدوات قياس مناسبة.',steps:'اختيار موقع آمن، رصد المكونات وتسجيلها دون الإضرار بالكائنات أو موائلها.',risk:'عدم لمس كائنات مجهولة أو جمع عينات دون تصريح.'},
-{n:'استقصاء حركة جسم',s:'الفيزياء',y:'السنة الثانية – المسار العام',t:'نموذج إثرائي',goal:'جمع بيانات الحركة وربط المسافة بالزمن.',tools:'عربة تعليمية، مسار، ساعة توقيت، شريط قياس.',steps:'تحديد مسافة، قياس الزمن بتكرارات، تنظيم البيانات ومناقشة مصادر الخطأ.',risk:'تثبيت المسار وإبعاد الأجسام عن حواف الطاولات.'},
-{n:'مقارنة خواص المحاليل',s:'الكيمياء',y:'السنة الثانية – المسار العام',t:'نموذج إثرائي',goal:'مقارنة خواص محاليل آمنة وفق تعليمات الدليل.',tools:'محاليل تعليمية معتمدة، أوعية موسومة، أدوات قياس مناسبة.',steps:'ترميز العينات وقياس الخاصية المحددة في دليل التجربة وتسجيل النتائج.',risk:'لا تُستخدم محاليل مجهولة؛ تُراجع التركيزات ووسائل الوقاية.'},
-{n:'دراسة الوراثة باستخدام نماذج',s:'الأحياء',y:'السنة الثانية – المسار العام',t:'نشاط نمذجة',goal:'تمثيل انتقال الصفات باستخدام نموذج تعليمي.',tools:'بطاقات وراثية أو خرز ملون، أوراق تسجيل.',steps:'تطبيق النموذج الاحتمالي وتسجيل النتائج ومقارنتها بالتوقعات.',risk:'استخدام أدوات مناسبة للعمر والبيئة الصفية.'},
-{n:'خصائص الصخور والمعادن',s:'علوم الأرض والفضاء',y:'السنة الثالثة – المسار العام',t:'نموذج إثرائي',goal:'تصنيف عينات وفق صفات فيزيائية ظاهرة.',tools:'عينات معروفة وآمنة، عدسة مكبرة، بطاقات تصنيف.',steps:'ملاحظة اللون والبريق والملمس والخواص المسموح باختبارها وفق الدليل.',risk:'عدم استنشاق الغبار أو إجراء اختبار خدش/حمض إلا بإشراف وإجراءات معتمدة.'}
+{n:'الكشف عن الأحماض والقواعد',s:'الكيمياء',y:'السنة الأولى المشتركة',t:'نموذج إثرائي',tools:'ورق تباع الشمس أو كاشف معتمد، أوعية صغيرة، قطارات، نظارات واقية.'},
+{n:'قياس الكثافة',s:'الفيزياء',y:'السنة الأولى المشتركة',t:'نموذج إثرائي',tools:'ميزان، مخبار مدرج، عينات آمنة، ماء.'},
+{n:'فحص الخلايا بالمجهر',s:'الأحياء',y:'السنة الأولى المشتركة',t:'نموذج إثرائي',tools:'مجهر، شرائح وأغطية، عينة تعليمية معتمدة، أدوات تحضير.'},
+{n:'ملاحظة النظام البيئي',s:'علم البيئة',y:'السنة الأولى المشتركة',t:'نشاط عملي مقترح',tools:'عدسة مكبرة، سجل ملاحظات، أدوات قياس مناسبة.'},
+{n:'استقصاء حركة جسم',s:'الفيزياء',y:'السنة الثانية – المسار العام',t:'نموذج إثرائي',tools:'عربة تعليمية، مسار، ساعة توقيت، شريط قياس.'},
+{n:'مقارنة خواص المحاليل',s:'الكيمياء',y:'السنة الثانية – المسار العام',t:'نموذج إثرائي',tools:'محاليل تعليمية معتمدة، أوعية موسومة، أدوات قياس مناسبة.'},
+{n:'دراسة الوراثة باستخدام نماذج',s:'الأحياء',y:'السنة الثانية – المسار العام',t:'نشاط نمذجة',tools:'بطاقات وراثية أو خرز ملون، أوراق تسجيل.'},
+{n:'خصائص الصخور والمعادن',s:'علوم الأرض والفضاء',y:'السنة الثالثة – المسار العام',t:'نموذج إثرائي',tools:'عينات معروفة وآمنة، عدسة مكبرة، بطاقات تصنيف.'}
 ];
 
 let experiments=[...baseExperiments,...customExperiments];
@@ -386,25 +364,10 @@ function prepCard(p){
  <strong>${esc(p.name)} ${done?'<span class="tag success">تم التجهيز</span>':'<span class="tag warn">قيد التجهيز</span>'}</strong>
  <span class="muted">${esc(p.date)} · ${esc(p.term)} · ${esc(p.year)} · ${esc(p.subject)} · الحصة ${esc(p.period)}</span>
  <p class="muted">${esc(p.materials||'لا توجد تفاصيل مواد')}</p>
- ${p.safety?`<p class="muted">السلامة: ${esc(p.safety)}</p>`:''}
  <div class="actions no-print">
  <button class="secondary" data-action="toggle" data-id="${esc(p.id)}">${done?'إلغاء تأكيد التجهيز':'تأكيد التجهيز'}</button>
  <button class="danger-btn" data-action="delete-prep" data-id="${esc(p.id)}">حذف</button>
  </div></div>`;
-}
-
-function renderSafety(){
- const a=[
- 'ارتداء معدات الوقاية المناسبة للتجربة',
- 'قراءة ملصق المادة ونشرة بيانات السلامة SDS',
- 'التأكد من التهوية وشفاط الأبخرة عند الحاجة',
- 'إبعاد مصادر الاشتعال عن المواد القابلة للاشتعال',
- 'التأكد من توفر مغسلة العين ودش الطوارئ وطفاية الحريق',
- 'تجهيز حاويات النفايات المناسبة',
- 'التأكد من سلامة الأجهزة والزجاجيات ومكان العمل',
- 'إبلاغ المسؤول عن أي انسكاب أو إصابة واتباع خطة الطوارئ'
- ];
- $('safetyChecks').innerHTML=a.map((x,i)=>`<label class="check"><input type="checkbox" data-safety="${i}" ${safetyState[i]?'checked':''}><span>${x}</span></label>`).join('');
 }
 
 function render(){
@@ -423,15 +386,13 @@ function render(){
  const q=$('expSearch').value.trim().toLowerCase();
 
  $('expList').innerHTML=experiments.map((e,i)=>({...e,_i:i}))
- .filter(e=>(f==='الكل'||e.s===f)&&(!q||(e.n+' '+e.s+' '+e.goal).toLowerCase().includes(q)))
+ .filter(e=>(f==='الكل'||e.s===f)&&(!q||(e.n+' '+e.s).toLowerCase().includes(q)))
  .map(e=>`<div class="item">
  <strong>${esc(e.n)}</strong>
  <span class="tag">${esc(e.s)}</span> <span class="tag warn">${esc(e.t)}</span>
- <p class="muted">${esc(e.y)} · ${esc(e.goal)}</p>
- <details><summary>تفاصيل التجربة والتنبيهات</summary>
- <p><b>الأدوات:</b> ${esc(e.tools)}</p>
- <p><b>الخطوات:</b> ${esc(e.steps)}</p>
- <p><b>السلامة:</b> ${esc(e.risk)}</p></details>
+ <p class="muted">${esc(e.y)}</p>
+ <details><summary>أدوات ومواد التجربة</summary>
+ <p>${esc(e.tools)}</p></details>
  <div class="actions">
  <button class="btn secondary" data-action="use-exp" data-index="${e._i}">إنشاء تحضير لهذه التجربة</button>
  ${e.custom?`<button class="btn danger-btn" data-action="delete-exp" data-index="${e._i}">حذف التجربة</button>`:''}
@@ -444,11 +405,8 @@ function render(){
  <strong>${esc(x.name)} <span class="tag">${esc(x.type)}</span></strong>
  <p class="muted">الكمية: ${esc(x.qty)} ${esc(x.unit)} · حد التنبيه: ${esc(x.min)}</p>
  ${Number(x.qty)<=Number(x.min)?'<span class="tag danger">كمية منخفضة</span>':''}
- ${x.expiry?`<p class="muted">الصلاحية: ${esc(x.expiry)}</p>`:''}
  <button class="btn danger-btn" data-action="delete-stock" data-index="${i}">حذف الصنف</button>
  </div>`).join('')||'<div class="empty">لم تتم إضافة أصناف للمخزون.</div>';
-
- renderSafety();
 }
 
 document.addEventListener('click',e=>{
@@ -481,7 +439,6 @@ document.addEventListener('click',e=>{
   $('pSubject').value=x.s;
   $('pYear').value=x.y;
   $('pMaterials').value=x.tools;
-  $('pSafety').value=x.risk;
   page('prep');
  }
 
@@ -501,7 +458,7 @@ $('prepForm').addEventListener('submit',e=>{
   year:$('pYear').value,subject:$('pSubject').value,
   name:$('pName').value.trim(),period:$('pPeriod').value,
   groups:$('pGroups').value,materials:$('pMaterials').value.trim(),
-  safety:$('pSafety').value.trim(),notes:$('pNotes').value.trim()
+  notes:$('pNotes').value.trim()
  };
  if(!p.name)return alert('اكتب اسم التجربة.');
  preps.unshift(p);
@@ -518,7 +475,7 @@ $('stockForm').addEventListener('submit',e=>{
  const x={
   name:$('iName').value.trim(),type:$('iType').value,
   qty:Number($('iQty').value),unit:$('iUnit').value.trim(),
-  min:Number($('iMin').value),expiry:$('iExpiry').value
+  min:Number($('iMin').value)
  };
  if(!x.name||x.qty<0||x.min<0)return alert('تحقق من اسم الصنف والكميات.');
  stock.push(x);
@@ -531,8 +488,7 @@ $('expForm').addEventListener('submit',e=>{
  const x={
   n:$('eName').value.trim(),s:$('eSubject').value,
   y:$('eYear').value,t:'أضيفت بواسطة محضر المختبر',
-  goal:$('eGoal').value.trim(),tools:$('eTools').value.trim(),
-  steps:$('eSteps').value.trim(),risk:$('eRisk').value.trim(),custom:true
+  tools:$('eTools').value.trim(),custom:true
  };
  if(!x.n)return alert('اكتب اسم التجربة.');
  customExperiments.push(x);
@@ -542,18 +498,6 @@ $('expForm').addEventListener('submit',e=>{
  alert('تمت إضافة التجربة إلى المكتبة على هذا الجهاز.');
 });
 
-$('safetyChecks').addEventListener('change',e=>{
- if(e.target.matches('[data-safety]')){
-  safetyState[e.target.dataset.safety]=e.target.checked;
-  put('safety',safetyState);
- }
-});
-
-$('resetSafety').addEventListener('click',()=>{
- if(!confirm('إعادة ضبط جميع علامات السلامة؟'))return;
- safetyState={};put('safety',safetyState);renderSafety();
-});
-
 ['filterSubject','planYear','planTerm'].forEach(id=>$(id).addEventListener('change',render));
 $('expSearch').addEventListener('input',render);
 $('printBtn').addEventListener('click',()=>window.print());
@@ -561,7 +505,7 @@ $('printBtn').addEventListener('click',()=>window.print());
 $('exportBtn').addEventListener('click',()=>{
  const data={
   app:'school-lab-smart',version:3,preps,stock,completed,
-  experiments:customExperiments,safety:safetyState,
+  experiments:customExperiments,
   exportedAt:new Date().toISOString()
  };
  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
@@ -585,11 +529,10 @@ $('importFile').addEventListener('change',async e=>{
    preps:d.preps,stock:d.stock,
    completed:Array.isArray(d.completed)?d.completed:[],
    experiments:Array.isArray(d.experiments)?d.experiments:[],
-   safety:d.safety&&typeof d.safety==='object'?d.safety:{}
   };
   for(const k of KEYS)if(!put(k,n[k]))throw Error('storage');
   preps=n.preps;stock=n.stock;completed=n.completed;
-  customExperiments=n.experiments;safetyState=n.safety;
+  customExperiments=n.experiments;
   experiments=[...baseExperiments,...customExperiments];
   render();
   alert('تمت استعادة النسخة الاحتياطية بنجاح.');
