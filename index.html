@@ -1,96 +1,1372 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#123b50" name="theme-color"/><meta content="نظام إدارة المختبر المدرسي للمرحلة الثانوية - المسار العام - العام الدراسي 1448هـ" name="description"/><meta content="yes" name="apple-mobile-web-app-capable"/><meta content="default" name="apple-mobile-web-app-status-bar-style"/><title>المختبر المدرسي</title><style>
-:root{--navy:#123b50;--teal:#187d78;--bg:#f3f6f8;--ink:#19313e;--muted:#667985;--line:#e1e8ec;--card:#fff}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif}header{background:linear-gradient(120deg,#123b50,#176b70);color:white;padding:22px max(18px,calc((100% - 1150px)/2))}header h1{margin:0 0 7px;font-size:23px}header p{margin:0;color:#d6e7e9;font-size:13px}.wrap{max-width:1150px;margin:auto;padding:18px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:-4px}.stat,.panel,.tile{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:16px}.stat b{display:block;font-size:25px;color:var(--navy);margin-bottom:4px}.stat span,.muted{font-size:12px;color:var(--muted)}.layout{display:grid;grid-template-columns:220px 1fr;gap:16px;margin-top:16px}.nav{display:flex;flex-direction:column;gap:7px;height:max-content;position:sticky;top:12px}.nav button{border:0;background:white;padding:12px;border-radius:10px;text-align:right;color:var(--ink);font:inherit;cursor:pointer}.nav button.active,.primary{background:var(--navy);color:white}.content{min-width:0}.panel h2{margin:0 0 7px;font-size:19px}.panel h3{font-size:15px;margin:18px 0 10px}.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.tile{cursor:pointer;text-align:right}.tile strong{display:block;margin:8px 0 4px}.tile .ico{font-size:23px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{flex:1}label{display:block;font-size:12px;color:var(--muted);margin:10px 0 5px}input,select,textarea{width:100%;padding:11px;border:1px solid #d5e0e5;border-radius:9px;background:white;font:inherit;color:var(--ink)}textarea{min-height:75px;resize:vertical}button{font:inherit;cursor:pointer}.btn{border:0;border-radius:9px;padding:11px 15px;margin-top:12px}.primary{background:var(--navy);color:white}.secondary{background:#eaf0f3;color:var(--ink)}.list{display:grid;gap:9px;margin-top:12px}.item{border:1px solid var(--line);border-radius:11px;padding:12px;background:white}.item strong{display:block;margin-bottom:5px}.tag{display:inline-block;background:#e9f3f2;color:#176b65;padding:4px 8px;border-radius:20px;font-size:11px}.warn{background:#fff4df;color:#8b5c14}.danger{background:#fdebed;color:#a43f4b}.success{background:#e8f5ed;color:#23724b}.hidden{display:none}.check{display:flex;gap:9px;align-items:flex-start;padding:8px 0;font-size:13px}.check input{width:auto;margin-top:3px}.foot{text-align:center;color:var(--muted);font-size:11px;padding:20px}.empty{padding:18px;text-align:center;color:var(--muted);background:#f7f9fa;border-radius:10px;font-size:13px}.actions{display:flex;gap:7px;flex-wrap:wrap}.actions button{padding:7px 10px;border:0;border-radius:8px}.delete-btn{background:#fdebed;color:#a43f4b;border:0;border-radius:8px;padding:8px 10px;margin:8px 5px 0 0}.download-btn{display:inline-block;background:#e9f3f2;color:#176b65;text-decoration:none;border-radius:8px;padding:8px 10px;margin:8px 5px 0 0}.source{font-size:11px;color:var(--muted);line-height:1.8} @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.nav{position:static;display:grid;grid-template-columns:repeat(2,1fr)}.tiles{grid-template-columns:repeat(2,1fr)}header h1{font-size:20px}.wrap{padding:12px}.row{display:block}}@media print{body{background:#fff}.nav,.no-print,header,.foot{display:none!important}.wrap{max-width:none;padding:0}.layout{display:block;margin:0}.content{width:100%}.panel{border:0;box-shadow:none;padding:0}.page.hidden{display:none!important}.page:not(.hidden){display:block!important}.item{break-inside:avoid}}
-</style><script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mammoth/mammoth.browser.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script></head><body><header><h1>🧪 المختبر المدرسي</h1><p>ثانوية عبادة بن الصامت بصعبان – تعليم عسير · العام الدراسي 1448–1449هـ</p></header><main class="wrap"><section class="stats"><div class="stat"><b id="sPrep">0</b><span>التحضيرات المسجلة</span></div><div class="stat"><b id="sDone">0</b><span>تجارب تم تجهيزها</span></div><div class="stat"><b id="sStock">0</b><span>أصناف المخزون</span></div><div class="stat"><b>2</b><span>فصلان دراسيان</span></div></section><div class="layout"><nav class="nav no-print" id="nav"><button class="active" data-page="home">🏠 الرئيسية</button><button data-page="plans">📚 الخطط الدراسية</button><button data-page="experiments">🧪 التجارب العملية</button><button data-page="prep">🗓️ التحضير اليومي</button><button data-page="stock">📦 المخزون</button><button data-page="loss">🧾 محاضر الفقد والكسر</button><button data-page="openclose">🔐 فتح وإغلاق المختبر</button><button data-page="reports">📊 التقارير والطباعة</button></nav><section class="content">
-<div class="panel page" id="home"><h2>لوحة محضر المختبر</h2><p class="muted">تابع تجهيز التجارب وسجلات المختبر من مكان واحد.</p><div class="tiles"><div class="tile" data-go="plans"><span class="ico">📚</span><strong>الخطط الدراسية</strong><span class="muted">السنة والمواد والفصول</span></div><div class="tile" data-go="experiments"><span class="ico">🧪</span><strong>التجارب العملية</strong><span class="muted">مكتبة التجارب وإجراءاتها</span></div><div class="tile" data-go="prep"><span class="ico">🗓️</span><strong>التحضير اليومي</strong><span class="muted">تسجيل التجهيز ومتابعته</span></div><div class="tile" data-go="stock"><span class="ico">📦</span><strong>المخزون</strong><span class="muted">الأدوات والكميات</span></div><div class="tile" data-go="loss"><span class="ico">🧾</span><strong>محاضر الفقد والكسر</strong><span class="muted">توثيق المفقودات والتلفيات</span></div><div class="tile" data-go="openclose"><span class="ico">🔐</span><strong>فتح وإغلاق المختبر</strong><span class="muted">سجل يومي لحالة المختبر</span></div><div class="tile" data-go="reports"><span class="ico">📊</span><strong>التقارير</strong><span class="muted">السجلات والطباعة</span></div></div><h3>آخر التحضيرات</h3><div class="list" id="recent"></div><p class="source">تنبيه: هذه نسخة أولية محلية. محتوى التجارب الظاهر أمثلة تعليمية أولية وليس ادعاءً بأنه حصر رسمي لكل تجارب كتب 1448هـ.</p></div>
-<div class="panel page hidden" id="plans"><h2>الخطط الدراسية</h2><p class="muted">اختر المستوى والفصل لربط التجارب بالمقرر. تُستكمل أسماء الوحدات وأرقام الصفحات بعد إدخال نسخة الكتب المعتمدة للمدرسة.</p><div class="row"><div><label>السنة</label><select id="planYear"><option>السنة الأولى المشتركة</option><option>السنة الثانية – المسار العام</option><option>السنة الثالثة – المسار العام</option></select></div><div><label>الفصل الدراسي</label><select id="planTerm"><option>الفصل الأول</option><option>الفصل الثاني</option></select></div></div><h3>المقررات العلمية ذات الصلة</h3><div class="list" id="courses"></div><p class="source">المصدر المرجعي: دليل الخطط الدراسية – وزارة التعليم. لا تُثبت خطة تفصيلية أو تجربة على أنها رسمية دون مطابقتها مع نسخة المقرر المعتمدة.</p><a href="https://www.moe.gov.sa/ar/education/general-education/study-plans" rel="noopener" target="_blank">فتح صفحة الخطط الدراسية بوزارة التعليم ↗</a></div>
-<div class="panel page hidden" id="experiments"><h2>مكتبة التجارب العملية</h2><details class="item"><summary><b>＋ إضافة تجربة جديدة إلى المكتبة</b></summary><form id="expForm"><label>اسم التجربة</label><input id="eName" required=""/><div class="row"><div><label>المادة</label><select id="eSubject"><option>الكيمياء</option><option>الفيزياء</option><option>الأحياء</option><option>علم البيئة</option><option>علوم الأرض والفضاء</option></select></div><div><label>السنة</label><select id="eYear"><option>السنة الأولى المشتركة</option><option>السنة الثانية – المسار العام</option><option>السنة الثالثة – المسار العام</option></select></div></div><label>الأدوات والمواد</label><textarea id="eTools"></textarea><button class="btn primary" type="submit">حفظ التجربة في مكتبتي</button></form></details><div class="item" style="margin:12px 0"><b>📥 استيراد التجارب من ملف</b><p class="muted">Word أو Excel أو PDF. يفضّل أن يكون المحتوى في جدول بعناوين واضحة.</p><input accept=".docx,.xlsx,.xls,.pdf" id="experimentImportFile" type="file"/><button class="btn secondary" onclick="importExperimentsFile()" type="button">استيراد التجارب</button></div><div class="row"><div><label>المادة</label><select id="filterSubject"><option value="الكل">كل المواد</option><option>الكيمياء</option><option>الفيزياء</option><option>الأحياء</option><option>علم البيئة</option><option>علوم الأرض والفضاء</option></select></div><div><label>بحث</label><input id="expSearch" placeholder="اسم التجربة أو المهارة"/></div></div><div class="list" id="expList"></div><p class="source">التجارب المعروضة نماذج أولية للتنظيم فقط. يجب مراجعة خطوات التنفيذ والكميات والمخاطر مع كتاب الطالب ودليل التجارب ونشرة سلامة المادة قبل التنفيذ.</p></div>
-<div class="panel page hidden" id="prep"><h2>التحضير اليومي للتجارب</h2><form id="prepForm"><div class="row"><div><label>التاريخ</label><input id="pDate" required="" type="date"/></div><div><label>الفصل الدراسي</label><select id="pTerm"><option>الفصل الأول</option><option>الفصل الثاني</option></select></div></div><div class="row"><div><label>السنة</label><select id="pYear"><option>السنة الأولى المشتركة</option><option>السنة الثانية – المسار العام</option><option>السنة الثالثة – المسار العام</option></select></div><div><label>المادة</label><select id="pSubject"><option>الكيمياء</option><option>الفيزياء</option><option>الأحياء</option><option>علم البيئة</option><option>علوم الأرض والفضاء</option></select></div></div><label>اسم التجربة / الدرس</label><input id="pName" placeholder="اكتب اسم التجربة" required=""/><div class="row"><div><label>الحصة</label><select id="pPeriod"><option>الأولى</option><option>الثانية</option><option>الثالثة</option><option>الرابعة</option><option>الخامسة</option><option>السادسة</option><option>السابعة</option></select></div><div><label>عدد المجموعات</label><input id="pGroups" min="1" type="number" value="1"/></div></div><label>الأدوات والمواد والكميات</label><textarea id="pMaterials" placeholder="اكتب الأدوات والمواد والكميات حسب دليل التجربة"></textarea><label>ملاحظات</label><textarea id="pNotes"></textarea><button class="btn primary" type="submit">حفظ التحضير</button></form><h3>سجل التحضيرات</h3><div class="list" id="prepList"></div></div>
-<div class="panel page hidden" id="stock"><h2>مخزون المختبر</h2><form id="stockForm"><div class="row"><div><label>اسم الصنف</label><input id="iName" required=""/></div><div><label>التصنيف</label><select id="iType"><option>أجهزة</option><option>زجاجيات</option><option>مواد كيميائية</option><option>أدوات عامة</option><option>معدات سلامة</option></select></div></div><div class="row"><div><label>الكمية</label><input id="iQty" min="0" required="" type="number"/></div><div><label>وحدة القياس</label><input id="iUnit" placeholder="قطعة، عبوة، لتر..."/></div></div><div class="row"><div><label>حد التنبيه عند النقص</label><input id="iMin" min="0" type="number" value="1"/></div></div><button class="btn primary" type="submit">إضافة إلى المخزون</button></form><div class="item" style="margin-top:12px"><b>📥 استيراد ملف للمخزون</b><p class="muted">Excel وWord وPDF النصي وCSV وTXT وTSV وJSON وXML وHTML. يفضّل أن يحتوي الملف عناوين واضحة لاسم الصنف والكمية والوحدة.</p><input accept=".xlsx,.xls,.docx,.pdf,.csv,.txt,.tsv,.json,.xml,.html,.htm" id="stockImportFile" type="file"/><button class="btn secondary" onclick="importStockFile()" type="button">استيراد المخزون</button></div><h3>سجل الأصناف</h3><div class="list" id="stockList"></div></div>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="#123b50" name="theme-color"/>
+<meta content="نظام إدارة المختبر المدرسي للمرحلة الثانوية - المسار العام - العام الدراسي 1448هـ" name="description"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<title>المختبر المدرسي</title>
 
-<div class="panel page hidden" id="loss"><h2>محاضر الفقد والكسر</h2><p class="muted">تسجيل حالات فقد أو كسر أو تلف عهد وأدوات المختبر، مع توثيق التفاصيل والإجراء المتخذ.</p><form id="lossForm"><div class="row"><div><label>نوع المحضر</label><select id="lType"><option>فقد</option><option>كسر</option><option>تلف</option></select></div><div><label>التاريخ</label><input id="lDate" type="date" required></div></div><div class="row"><div><label>اسم الصنف / الأداة</label><input id="lItem" required></div><div><label>الكمية</label><input id="lQty" type="number" min="1" value="1" required></div></div><div class="row"><div><label>المادة / القسم</label><input id="lSubject" placeholder="مثال: مختبر الكيمياء"></div><div><label>مكان حدوث الحالة</label><input id="lPlace" placeholder="داخل المختبر / المخزن"></div></div><label>وصف الحالة وظروف حدوثها</label><textarea id="lDetails" required></textarea><label>الإجراء المتخذ</label><textarea id="lAction"></textarea><div><label>اسم محرر المحضر</label><input id="lReporter" required></div><button class="btn primary" type="submit">حفظ المحضر</button></form><h3>سجل محاضر الفقد والكسر</h3><div class="list" id="lossList"></div></div>
-<div class="panel page hidden" id="openclose"><h2>محضر فتح وإغلاق المختبر المدرسي</h2><p class="muted">تسجيل حالة المختبر عند الفتح والإغلاق، بما يشمل التاريخ والوقت وحالة الأجهزة والمرافق.</p><form id="ocForm"><div class="row"><div><label>نوع الإجراء</label><select id="ocType"><option>فتح المختبر</option><option>إغلاق المختبر</option></select></div><div><label>التاريخ</label><input id="ocDate" type="date" required></div></div><div class="row"><div><label>الوقت</label><input id="ocTime" type="time" required></div><div><label>الفصل الدراسي</label><select id="ocTerm"><option>الفصل الأول</option><option>الفصل الثاني</option></select></div></div><div class="row"><div><label>حالة المختبر</label><select id="ocCondition"><option>سليم ومنظم</option><option>توجد ملاحظات</option><option>يحتاج إلى متابعة</option></select></div><div><label>اسم المسؤول</label><input id="ocResponsible" required></div></div><label>حالة الأجهزة والأدوات والمواد</label><textarea id="ocEquipment" placeholder="اذكر حالة الأجهزة والأدوات والمواد عند الفتح أو الإغلاق"></textarea><label>ملاحظات وإجراءات</label><textarea id="ocNotes"></textarea><button class="btn primary" type="submit">حفظ سجل الفتح / الإغلاق</button></form><h3>سجل فتح وإغلاق المختبر</h3><div class="list" id="ocList"></div></div>
-<div class="panel page hidden" id="reports"><h2>التقارير والطباعة</h2><div class="row"><div class="stat"><b id="rTotal">0</b><span>إجمالي التحضيرات</span></div><div class="stat"><b id="rComplete">0</b><span>تم التجهيز</span></div></div><h3>سجل التحضير</h3><div class="list" id="reportList"></div><div class="actions no-print"><button class="btn primary" onclick="window.print()">🖨️ طباعة / حفظ PDF</button><button class="btn secondary" id="exportBtn">⬇️ تصدير نسخة البيانات JSON</button><label>استعادة نسخة احتياطية سابقة</label><input accept="application/json" id="importFile" type="file"/></div><p class="source">البيانات محفوظة في متصفح هذا الجهاز فقط. استخدم تصدير البيانات للاحتفاظ بنسخة احتياطية، ولا تضع بيانات شخصية أو حساسة.</p></div>
-</section></div><div class="foot">المختبر المدرسي · نموذج أولي قابل للتطوير · الإصدار 0.3</div></main>
+<style>
+:root{--navy:#123b50;--teal:#187d78;--bg:#f3f6f8;--ink:#19313e;--muted:#667985;--line:#e1e8ec;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif}
+header{background:linear-gradient(120deg,#123b50,#176b70);color:white;padding:22px max(18px,calc((100% - 1150px)/2))}
+header h1{margin:0 0 7px;font-size:23px}
+header p{margin:0;color:#d6e7e9;font-size:13px}
+.wrap{max-width:1150px;margin:auto;padding:18px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:-4px}
+.stat,.panel,.tile{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:16px}
+.stat b{display:block;font-size:25px;color:var(--navy);margin-bottom:4px}
+.stat span,.muted{font-size:12px;color:var(--muted)}
+.layout{display:grid;grid-template-columns:220px 1fr;gap:16px;margin-top:16px}
+.nav{display:flex;flex-direction:column;gap:7px;height:max-content;position:sticky;top:12px}
+.nav button{border:0;background:white;padding:12px;border-radius:10px;text-align:right;color:var(--ink);font:inherit;cursor:pointer}
+.nav button.active,.primary{background:var(--navy);color:white}
+.content{min-width:0}
+.panel h2{margin:0 0 7px;font-size:19px}
+.panel h3{font-size:15px;margin:18px 0 10px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.tile{cursor:pointer;text-align:right}
+.tile strong{display:block;margin:8px 0 4px}
+.tile .ico{font-size:23px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+label{display:block;font-size:12px;color:var(--muted);margin:10px 0 5px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #d5e0e5;border-radius:9px;background:white;font:inherit;color:var(--ink)}
+textarea{min-height:75px;resize:vertical}
+button{font:inherit;cursor:pointer}
+.btn{border:0;border-radius:9px;padding:11px 15px;margin-top:12px}
+.primary{background:var(--navy);color:white}
+.secondary{background:#eaf0f3;color:var(--ink)}
+.list{display:grid;gap:9px;margin-top:12px}
+.item{border:1px solid var(--line);border-radius:11px;padding:12px;background:white}
+.item strong{display:block;margin-bottom:5px}
+.tag{display:inline-block;background:#e9f3f2;color:#176b65;padding:4px 8px;border-radius:20px;font-size:11px}
+.warn{background:#fff4df;color:#8b5c14}
+.danger{background:#fdebed;color:#a43f4b}
+.success{background:#e8f5ed;color:#23724b}
+.hidden{display:none}
+.check{display:flex;gap:9px;align-items:flex-start;padding:8px 0;font-size:13px}
+.check input{width:auto;margin-top:3px}
+.foot{text-align:center;color:var(--muted);font-size:11px;padding:20px}
+.empty{padding:18px;text-align:center;color:var(--muted);background:#f7f9fa;border-radius:10px;font-size:13px}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.actions button{padding:7px 10px;border:0;border-radius:8px}
+.delete-btn{background:#fdebed;color:#a43f4b;border:0;border-radius:8px;padding:8px 10px;margin:8px 5px 0 0}
+.download-btn{display:inline-block;background:#e9f3f2;color:#176b65;text-decoration:none;border-radius:8px;padding:8px 10px;margin:8px 5px 0 0}
+.source{font-size:11px;color:var(--muted);line-height:1.8}
+
+@media(max-width:760px){
+.stats{grid-template-columns:repeat(2,1fr)}
+.layout{grid-template-columns:1fr}
+.nav{position:static;display:grid;grid-template-columns:repeat(2,1fr)}
+.tiles{grid-template-columns:repeat(2,1fr)}
+header h1{font-size:20px}
+.wrap{padding:12px}
+.row{display:block}
+}
+
+@media print{
+body{background:#fff}
+.nav,.no-print,header,.foot{display:none!important}
+.wrap{max-width:none;padding:0}
+.layout{display:block;margin:0}
+.content{width:100%}
+.panel{border:0;box-shadow:none;padding:0}
+.page.hidden{display:none!important}
+.page:not(.hidden){display:block!important}
+.item{break-inside:avoid}
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mammoth/mammoth.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+
+<body>
+
+<header>
+<h1>🧪 المختبر المدرسي</h1>
+<p>ثانوية عبادة بن الصامت بصعبان – تعليم عسير · العام الدراسي 1448–1449هـ</p>
+</header>
+
+<main class="wrap">
+
+<section class="stats">
+<div class="stat"><b id="sPrep">0</b><span>التحضيرات المسجلة</span></div>
+<div class="stat"><b id="sDone">0</b><span>تجارب تم تجهيزها</span></div>
+<div class="stat"><b id="sStock">0</b><span>أصناف المخزون</span></div>
+<div class="stat"><b>2</b><span>فصلان دراسيان</span></div>
+</section>
+
+<div class="layout">
+
+<nav class="nav no-print" id="nav">
+<button class="active" data-page="home">🏠 الرئيسية</button>
+<button data-page="plans">📚 الخطط الدراسية</button>
+<button data-page="experiments">🧪 التجارب العملية</button>
+<button data-page="prep">🗓️ التحضير اليومي</button>
+<button data-page="stock">📦 المخزون</button>
+<button data-page="loss">🧾 محاضر الفقد والكسر</button>
+<button data-page="openclose">🔐 فتح وإغلاق المختبر</button>
+<button data-page="reports">📊 التقارير والطباعة</button>
+</nav>
+
+<section class="content">
+
+<div class="panel page" id="home">
+<h2>لوحة محضر المختبر</h2>
+<p class="muted">تابع تجهيز التجارب وسجلات المختبر من مكان واحد.</p>
+
+<div class="tiles">
+<div class="tile" data-go="plans"><span class="ico">📚</span><strong>الخطط الدراسية</strong><span class="muted">السنة والمواد والفصول</span></div>
+<div class="tile" data-go="experiments"><span class="ico">🧪</span><strong>التجارب العملية</strong><span class="muted">مكتبة التجارب وإجراءاتها</span></div>
+<div class="tile" data-go="prep"><span class="ico">🗓️</span><strong>التحضير اليومي</strong><span class="muted">تسجيل التجهيز ومتابعته</span></div>
+<div class="tile" data-go="stock"><span class="ico">📦</span><strong>المخزون</strong><span class="muted">الأدوات والكميات</span></div>
+<div class="tile" data-go="loss"><span class="ico">🧾</span><strong>محاضر الفقد والكسر</strong><span class="muted">توثيق المفقودات والتلفيات</span></div>
+<div class="tile" data-go="openclose"><span class="ico">🔐</span><strong>فتح وإغلاق المختبر</strong><span class="muted">سجل يومي لحالة المختبر</span></div>
+<div class="tile" data-go="reports"><span class="ico">📊</span><strong>التقارير</strong><span class="muted">السجلات والطباعة</span></div>
+</div>
+
+<h3>آخر التحضيرات</h3>
+<div class="list" id="recent"></div>
+
+<p class="source">تنبيه: هذه نسخة أولية محلية. محتوى التجارب الظاهر أمثلة تعليمية أولية وليس ادعاءً بأنه حصر رسمي لكل تجارب كتب 1448هـ.</p>
+</div>
+
+<div class="panel page hidden" id="plans">
+<h2>الخطط الدراسية</h2>
+<p class="muted">اختر المستوى والفصل لربط التجارب بالمقرر. تُستكمل أسماء الوحدات وأرقام الصفحات بعد إدخال نسخة الكتب المعتمدة للمدرسة.</p>
+
+<div class="row">
+<div>
+<label>السنة</label>
+<select id="planYear">
+<option>السنة الأولى المشتركة</option>
+<option>السنة الثانية – المسار العام</option>
+<option>السنة الثالثة – المسار العام</option>
+</select>
+</div>
+<div>
+<label>الفصل الدراسي</label>
+<select id="planTerm">
+<option>الفصل الأول</option>
+<option>الفصل الثاني</option>
+</select>
+</div>
+</div>
+
+<h3>المقررات العلمية ذات الصلة</h3>
+<div class="list" id="courses"></div>
+<p class="source">المصدر المرجعي: دليل الخطط الدراسية – وزارة التعليم. لا تُثبت خطة تفصيلية أو تجربة على أنها رسمية دون مطابقتها مع نسخة المقرر المعتمدة.</p>
+<a href="https://www.moe.gov.sa/ar/education/general-education/study-plans" rel="noopener" target="_blank">فتح صفحة الخطط الدراسية بوزارة التعليم ↗</a>
+</div>
+
+<div class="panel page hidden" id="experiments">
+<h2>مكتبة التجارب العملية</h2>
+
+<details class="item">
+<summary><b>＋ إضافة تجربة جديدة إلى المكتبة</b></summary>
+
+<form id="expForm">
+<label>اسم التجربة</label>
+<input id="eName" required=""/>
+
+<div class="row">
+<div>
+<label>المادة</label>
+<select id="eSubject">
+<option>الكيمياء</option>
+<option>الفيزياء</option>
+<option>الأحياء</option>
+<option>علم البيئة</option>
+<option>علوم الأرض والفضاء</option>
+</select>
+</div>
+
+<div>
+<label>السنة</label>
+<select id="eYear">
+<option>السنة الأولى المشتركة</option>
+<option>السنة الثانية – المسار العام</option>
+<option>السنة الثالثة – المسار العام</option>
+</select>
+</div>
+</div>
+
+<label>هدف التجربة</label>
+<textarea id="eGoal"></textarea>
+
+<label>الأدوات والمواد</label>
+<textarea id="eTools"></textarea>
+
+<label>خطوات التنفيذ</label>
+<textarea id="eSteps"></textarea>
+
+<label>احتياطات السلامة</label>
+<textarea id="eRisk"></textarea>
+
+<button class="btn primary" type="submit">حفظ التجربة في مكتبتي</button>
+</form>
+</details>
+
+<div class="item" style="margin:12px 0">
+<b>📥 استيراد التجارب من ملف</b>
+<p class="muted">Word أو Excel أو PDF. يفضّل أن يكون المحتوى في جدول بعناوين واضحة.</p>
+<input accept=".docx,.xlsx,.xls,.pdf" id="experimentImportFile" type="file"/>
+<button class="btn secondary" onclick="importExperimentsFile()" type="button">استيراد التجارب</button>
+</div>
+
+<div class="row">
+<div>
+<label>المادة</label>
+<select id="filterSubject">
+<option value="الكل">كل المواد</option>
+<option>الكيمياء</option>
+<option>الفيزياء</option>
+<option>الأحياء</option>
+<option>علم البيئة</option>
+<option>علوم الأرض والفضاء</option>
+</select>
+</div>
+<div>
+<label>بحث</label>
+<input id="expSearch" placeholder="اسم التجربة أو المهارة"/>
+</div>
+</div>
+
+<div class="list" id="expList"></div>
+
+<p class="source">التجارب المعروضة نماذج أولية للتنظيم فقط. يجب مراجعة خطوات التنفيذ والكميات والمخاطر مع كتاب الطالب ودليل التجارب ونشرة سلامة المادة قبل التنفيذ.</p>
+</div>
+
+<div class="panel page hidden" id="prep">
+<h2>التحضير اليومي للتجارب</h2>
+
+<form id="prepForm">
+<div class="row">
+<div>
+<label>التاريخ</label>
+<input id="pDate" required="" type="date"/>
+</div>
+<div>
+<label>الفصل الدراسي</label>
+<select id="pTerm">
+<option>الفصل الأول</option>
+<option>الفصل الثاني</option>
+</select>
+</div>
+</div>
+
+<div class="row">
+<div>
+<label>السنة</label>
+<select id="pYear">
+<option>السنة الأولى المشتركة</option>
+<option>السنة الثانية – المسار العام</option>
+<option>السنة الثالثة – المسار العام</option>
+</select>
+</div>
+<div>
+<label>المادة</label>
+<select id="pSubject">
+<option>الكيمياء</option>
+<option>الفيزياء</option>
+<option>الأحياء</option>
+<option>علم البيئة</option>
+<option>علوم الأرض والفضاء</option>
+</select>
+</div>
+</div>
+
+<label>اسم التجربة / الدرس</label>
+<input id="pName" placeholder="اكتب اسم التجربة" required=""/>
+
+<div class="row">
+<div>
+<label>الحصة</label>
+<select id="pPeriod">
+<option>الأولى</option><option>الثانية</option><option>الثالثة</option><option>الرابعة</option><option>الخامسة</option><option>السادسة</option><option>السابعة</option>
+</select>
+</div>
+<div>
+<label>عدد المجموعات</label>
+<input id="pGroups" min="1" type="number" value="1"/>
+</div>
+</div>
+
+<label>الأدوات والمواد والكميات</label>
+<textarea id="pMaterials" placeholder="اكتب الأدوات والمواد والكميات حسب دليل التجربة"></textarea>
+
+<label>ملاحظات</label>
+<textarea id="pNotes"></textarea>
+
+<button class="btn primary" type="submit">حفظ التحضير</button>
+</form>
+
+<h3>سجل التحضيرات</h3>
+<div class="list" id="prepList"></div>
+</div>
+
+<div class="panel page hidden" id="stock">
+<h2>مخزون المختبر</h2>
+
+<form id="stockForm">
+<div class="row">
+<div>
+<label>اسم الصنف</label>
+<input id="iName" required=""/>
+</div>
+<div>
+<label>التصنيف</label>
+<select id="iType">
+<option>أجهزة</option><option>زجاجيات</option><option>مواد كيميائية</option><option>أدوات عامة</option><option>معدات سلامة</option>
+</select>
+</div>
+</div>
+
+<div class="row">
+<div>
+<label>الكمية</label>
+<input id="iQty" min="0" required="" type="number"/>
+</div>
+<div>
+<label>الوحدة</label>
+<input id="iUnit" placeholder="قطعة، عبوة، لتر..."/>
+</div>
+</div>
+
+<div class="row">
+<div>
+<label>حد التنبيه عند النقص</label>
+<input id="iMin" min="0" type="number" value="1"/>
+</div>
+</div>
+
+<button class="btn primary" type="submit">إضافة إلى المخزون</button>
+</form>
+
+<div class="item" style="margin-top:12px">
+<b>📥 استيراد ملف للمخزون</b>
+<p class="muted">Excel وWord وPDF النصي وCSV وTXT وTSV وJSON وXML وHTML. يفضّل أن يحتوي الملف عناوين واضحة لاسم الصنف والكمية والوحدة.</p>
+<input accept=".xlsx,.xls,.docx,.pdf,.csv,.txt,.tsv,.json,.xml,.html,.htm" id="stockImportFile" type="file"/>
+<button class="btn secondary" onclick="importStockFile()" type="button">استيراد المخزون</button>
+</div>
+
+<h3>سجل الأصناف</h3>
+<div class="list" id="stockList"></div>
+</div>
+
+<div class="panel page hidden" id="loss">
+<h2>محاضر الفقد والكسر</h2>
+<p class="muted">تسجيل حالات فقد أو كسر أو تلف عهد وأدوات المختبر، مع توثيق التفاصيل والإجراء المتخذ.</p>
+
+<form id="lossForm">
+<div class="row">
+<div>
+<label>نوع المحضر</label>
+<select id="lType"><option>فقد</option><option>كسر</option><option>تلف</option></select>
+</div>
+<div>
+<label>التاريخ</label>
+<input id="lDate" type="date" required>
+</div>
+</div>
+
+<div class="row">
+<div>
+<label>اسم الصنف / الأداة</label>
+<input id="lItem" required>
+</div>
+<div>
+<label>الكمية</label>
+<input id="lQty" type="number" min="1" value="1" required>
+</div>
+</div>
+
+<div class="row">
+<div>
+<label>المادة / القسم</label>
+<input id="lSubject" placeholder="مثال: مختبر الكيمياء">
+</div>
+<div>
+<label>مكان حدوث الحالة</label>
+<input id="lPlace" placeholder="داخل المختبر / المخزن">
+</div>
+</div>
+
+<label>وصف الحالة وظروف حدوثها</label>
+<textarea id="lDetails" required></textarea>
+
+<label>الإجراء المتخذ</label>
+<textarea id="lAction"></textarea>
+
+<div>
+<label>اسم محرر المحضر</label>
+<input id="lReporter" required>
+</div>
+
+<button class="btn primary" type="submit">حفظ المحضر</button>
+</form>
+
+<h3>سجل محاضر الفقد والكسر</h3>
+<div class="list" id="lossList"></div>
+</div>
+
+<div class="panel page hidden" id="openclose">
+<h2>محضر فتح وإغلاق المختبر المدرسي</h2>
+<p class="muted">تسجيل حالة المختبر عند الفتح والإغلاق، بما يشمل التاريخ والوقت وحالة الأجهزة والمرافق.</p>
+
+<form id="ocForm">
+<div class="row">
+<div>
+<label>نوع الإجراء</label>
+<select id="ocType"><option>فتح المختبر</option><option>إغلاق المختبر</option></select>
+</div>
+<div>
+<label>التاريخ</label>
+<input id="ocDate" type="date" required>
+</div>
+</div>
+
+<div class="row">
+<div>
+<label>الوقت</label>
+<input id="ocTime" type="time" required>
+</div>
+<div>
+<label>الفصل الدراسي</label>
+<select id="ocTerm"><option>الفصل الأول</option><option>الفصل الثاني</option></select>
+</div>
+</div>
+
+<div class="row">
+<div>
+<label>حالة المختبر</label>
+<select id="ocCondition"><option>سليم ومنظم</option><option>توجد ملاحظات</option><option>يحتاج إلى متابعة</option></select>
+</div>
+<div>
+<label>اسم المسؤول</label>
+<input id="ocResponsible" required>
+</div>
+</div>
+
+<label>حالة الأجهزة والأدوات والمواد</label>
+<textarea id="ocEquipment" placeholder="اذكر حالة الأجهزة والأدوات والمواد عند الفتح أو الإغلاق"></textarea>
+
+<label>ملاحظات وإجراءات</label>
+<textarea id="ocNotes"></textarea>
+
+<button class="btn primary" type="submit">حفظ سجل الفتح / الإغلاق</button>
+</form>
+
+<h3>سجل فتح وإغلاق المختبر</h3>
+<div class="list" id="ocList"></div>
+</div>
+
+<div class="panel page hidden" id="reports">
+<h2>التقارير والطباعة</h2>
+
+<div class="row">
+<div class="stat"><b id="rTotal">0</b><span>إجمالي التحضيرات</span></div>
+<div class="stat"><b id="rComplete">0</b><span>تم التجهيز</span></div>
+</div>
+
+<h3>سجل التحضير</h3>
+<div class="list" id="reportList"></div>
+
+<div class="actions no-print">
+<button class="btn primary" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+<button class="btn secondary" id="exportBtn">⬇️ تصدير نسخة البيانات JSON</button>
+<label>استعادة نسخة احتياطية سابقة</label>
+<input accept="application/json" id="importFile" type="file"/>
+</div>
+
+<p class="source">البيانات محفوظة في متصفح هذا الجهاز فقط. استخدم تصدير البيانات للاحتفاظ بنسخة احتياطية، ولا تضع بيانات شخصية أو حساسة.</p>
+</div>
+
+</section>
+</div>
+
+<div class="foot">المختبر المدرسي · نموذج أولي قابل للتطوير · الإصدار 0.3</div>
+</main>
 
 <script>
-const $=id=>document.getElementById(id);const get=(k,d=[])=>{try{return JSON.parse(localStorage.getItem('lab_'+k))||d}catch{return d}};const put=(k,v)=>localStorage.setItem('lab_'+k,JSON.stringify(v));let preps=get('preps'),stock=get('stock'),completed=get('completed',[]),customExperiments=get('experiments'),removedExperiments=get('removedExperiments',[]),lossReports=get('lossReports',[]).map(({witness,...report})=>report),openCloseLogs=get('openCloseLogs',[]);put('lossReports',lossReports);
+  const $=id=>document.getElementById(id);
+const get=(k,d=[])=>{try{return JSON.parse(localStorage.getItem('lab_'+k))||d}catch{return d}};
+const put=(k,v)=>localStorage.setItem('lab_'+k,JSON.stringify(v));
+
+let preps=get('preps'),
+stock=get('stock'),
+completed=get('completed',[]),
+customExperiments=get('experiments'),
+removedExperiments=get('removedExperiments',[]),
+lossReports=get('lossReports',[]).map(({witness,...report})=>report),
+openCloseLogs=get('openCloseLogs',[]);
+
+let editExpIndex=-1;
+
+put('lossReports',lossReports);
+
 let experiments=[
 {n:'الكشف عن الأحماض والقواعد',s:'الكيمياء',y:'السنة الأولى المشتركة',t:'نموذج إثرائي',goal:'تمييز طبيعة بعض المحاليل باستخدام كاشف مناسب.',tools:'ورق تباع الشمس أو كاشف معتمد، أوعية صغيرة، قطارات، نظارات واقية.',steps:'تُتبع خطوات دليل التجربة المدرسي المعتمد مع استخدام كميات صغيرة وتجنب الملامسة أو التذوق.',risk:'تحديد الكواشف وتركيزاتها من ملصق العبوة ونشرة SDS؛ يمنع خلط مواد مجهولة.'},
+
 {n:'قياس الكثافة',s:'الفيزياء',y:'السنة الأولى المشتركة',t:'نموذج إثرائي',goal:'حساب الكثافة من قياس الكتلة والحجم.',tools:'ميزان، مخبار مدرج، عينات آمنة، ماء.',steps:'قياس الكتلة، تحديد الحجم بالطريقة المناسبة، ثم حساب الكثافة ومقارنة النتائج.',risk:'تجفيف الانسكابات فوراً وإبعاد الأجهزة الكهربائية عن الماء.'},
+
 {n:'فحص الخلايا بالمجهر',s:'الأحياء',y:'السنة الأولى المشتركة',t:'نموذج إثرائي',goal:'ملاحظة تراكيب خلوية باستخدام المجهر الضوئي.',tools:'مجهر، شرائح وأغطية، عينة تعليمية معتمدة، أدوات تحضير.',steps:'تحضير الشريحة وفق الدليل، البدء بالتكبير الأقل، ثم ضبط التركيز تدريجياً.',risk:'التعامل بحذر مع الشرائح الزجاجية والتخلص من المكسور في حاوية مخصصة.'},
+
 {n:'ملاحظة النظام البيئي',s:'علم البيئة',y:'السنة الأولى المشتركة',t:'نشاط عملي مقترح',goal:'رصد مكونات حية وغير حية وعلاقاتها.',tools:'عدسة مكبرة، سجل ملاحظات، أدوات قياس مناسبة.',steps:'اختيار موقع آمن، رصد المكونات وتسجيلها دون الإضرار بالكائنات أو موائلها.',risk:'عدم لمس كائنات مجهولة أو جمع عينات دون تصريح.'},
+
 {n:'استقصاء حركة جسم',s:'الفيزياء',y:'السنة الثانية – المسار العام',t:'نموذج إثرائي',goal:'جمع بيانات الحركة وربط المسافة بالزمن.',tools:'عربة تعليمية، مسار، ساعة توقيت، شريط قياس.',steps:'تحديد مسافة، قياس الزمن بتكرارات، تنظيم البيانات ومناقشة مصادر الخطأ.',risk:'تثبيت المسار وإبعاد الأجسام عن حواف الطاولات.'},
+
 {n:'مقارنة خواص المحاليل',s:'الكيمياء',y:'السنة الثانية – المسار العام',t:'نموذج إثرائي',goal:'مقارنة خواص محاليل آمنة وفق تعليمات الدليل.',tools:'محاليل تعليمية معتمدة، أوعية موسومة، أدوات قياس مناسبة.',steps:'ترميز العينات وقياس الخاصية المحددة في دليل التجربة وتسجيل النتائج.',risk:'لا تُستخدم محاليل مجهولة؛ تُراجع التركيزات ووسائل الوقاية قبل التحضير.'},
+
 {n:'دراسة الوراثة باستخدام نماذج',s:'الأحياء',y:'السنة الثانية – المسار العام',t:'نشاط نمذجة',goal:'تمثيل انتقال الصفات باستخدام نموذج تعليمي.',tools:'بطاقات وراثية أو خرز ملون، أوراق تسجيل.',steps:'تطبيق النموذج الاحتمالي وتسجيل النتائج ومقارنتها بالتوقعات.',risk:'استخدام أدوات غير صغيرة إذا كان النشاط في بيئة تضم أطفالاً.'},
+
 {n:'خصائص الصخور والمعادن',s:'علوم الأرض والفضاء',y:'السنة الثالثة – المسار العام',t:'نموذج إثرائي',goal:'تصنيف عينات وفق صفات فيزيائية ظاهرة.',tools:'عينات معروفة وآمنة، عدسة مكبرة، بطاقات تصنيف.',steps:'ملاحظة اللون والبريق والملمس والخواص المسموح باختبارها وفق الدليل.',risk:'عدم استنشاق الغبار أو إجراء اختبار خدش/حمض إلا بإشراف وإجراءات معتمدة.'}
 ];
-experiments.push(...customExperiments);experiments=experiments.filter(e=>!removedExperiments.includes(expKey(e)));
+
+experiments.push(...customExperiments);
+experiments=experiments.filter(e=>!removedExperiments.includes(expKey(e)));
+
 function expKey(e){return [e.n,e.s,e.y].join('||')}
-const courses={'السنة الأولى المشتركة':['الكيمياء 1','الفيزياء 1','الأحياء 1','علم البيئة'],'السنة الثانية – المسار العام':['الكيمياء','الأحياء','الفيزياء (بحسب الخطة المعتمدة)'],'السنة الثالثة – المسار العام':['الفيزياء','علوم الأرض والفضاء','الكيمياء (بحسب الخطة المعتمدة)']};
-function page(p){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('hidden',x.id!==p));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===p));render()}
-document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>page(b.dataset.page));document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>page(b.dataset.go));
-function render(){
-$('sPrep').textContent=preps.length;$('sDone').textContent=completed.length;$('sStock').textContent=stock.length;$('rTotal').textContent=preps.length;$('rComplete').textContent=completed.length;
-$('recent').innerHTML=preps.slice(0,4).map(p=>`<div class="item"><strong>${esc(p.name)}</strong><span class="muted">${esc(p.date)} · ${esc(p.subject)} · ${esc(p.term)}</span></div>`).join('')||'<div class="empty">لا توجد تحضيرات مسجلة بعد.</div>';
-let y=$('planYear').value||'السنة الأولى المشتركة';$('courses').innerHTML=(courses[y]||[]).map(c=>`<div class="item"><strong>${esc(c)}</strong><span class="muted">يُربط بالمقرر والفصل بعد مطابقة توزيع المنهج الرسمي.</span></div>`).join('');
-let f=$('filterSubject').value,q=$('expSearch').value.trim();$('expList').innerHTML=experiments.filter(e=>(f==='الكل'||e.s===f)&&(!q||(e.n+e.s).includes(q))).map(e=>`<div class="item"><strong>${esc(e.n)}</strong><span class="tag">${esc(e.s)}</span> <span class="tag warn">${esc(e.t)}</span><p class="muted">${esc(e.y)}</p><p class="muted"><b>الأدوات والمواد:</b> ${esc(e.tools)}</p><button class="btn secondary" onclick="useExp(${experiments.indexOf(e)})">إنشاء تحضير لهذه التجربة</button><button class="delete-btn" onclick="deleteExperiment(${experiments.indexOf(e)})" title="حذف التجربة">🗑️ حذف</button></div>`).join('')||'<div class="empty">لا توجد نتائج مطابقة.</div>';
-$('prepList').innerHTML=preps.map(p=>prepCard(p)).join('')||'<div class="empty">لا توجد تحضيرات.</div>';$('reportList').innerHTML=$('prepList').innerHTML;
-$('stockList').innerHTML=stock.map((x,i)=>`<div class="item"><strong>${esc(x.name)} <span class="tag">${esc(x.type)}</span></strong><p class="muted">الكمية: ${x.qty} ${esc(x.unit)} · حد التنبيه: ${x.min}</p>${x.qty<=x.min?'<span class="tag danger">كمية منخفضة</span>':''}<button class="btn secondary" onclick="delStock(${i})">حذف الصنف</button></div>`).join('')||'<div class="empty">لم تتم إضافة أصناف للمخزون.</div>';
-renderLoss();renderOpenClose();
+
+const courses={
+'السنة الأولى المشتركة':['الكيمياء 1','الفيزياء 1','الأحياء 1','علم البيئة'],
+'السنة الثانية – المسار العام':['الكيمياء','الأحياء','الفيزياء (بحسب الخطة المعتمدة)'],
+'السنة الثالثة – المسار العام':['الفيزياء','علوم الأرض والفضاء','الكيمياء (بحسب الخطة المعتمدة)']
+};
+
+function page(p){
+document.querySelectorAll('.page').forEach(x=>x.classList.toggle('hidden',x.id!==p));
+document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===p));
+render()
 }
-function prepCard(p){return `<div class="item"><strong>${esc(p.name)} ${completed.includes(p.id)?'<span class="tag success">تم التجهيز</span>':'<span class="tag warn">قيد التجهيز</span>'}</strong><span class="muted">${esc(p.date)} · ${esc(p.term)} · ${esc(p.year)} · ${esc(p.subject)} · الحصة ${esc(p.period)}</span><p class="muted">${esc(p.materials||'لا توجد تفاصيل مواد')}</p><div class="actions no-print"><button class="secondary" onclick="toggleDone('${p.id}')">${completed.includes(p.id)?'إلغاء التأكيد':'تأكيد التجهيز'}</button><button class="secondary" onclick="delPrep('${p.id}')">حذف</button></div></div>`}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-window.useExp=i=>{let e=experiments[i];$('pName').value=e.n;$('pSubject').value=e.s;$('pYear').value=e.y;$('pMaterials').value=e.tools;page('prep')};
-window.toggleDone=id=>{completed=completed.includes(id)?completed.filter(x=>x!==id):[...completed,id];put('completed',completed);render()};
-window.delPrep=id=>{preps=preps.filter(x=>x.id!==id);completed=completed.filter(x=>x!==id);put('preps',preps);put('completed',completed);render()};
-window.delStock=i=>{stock.splice(i,1);put('stock',stock);render()};
-window.deleteExperiment=i=>{const e=experiments[i];if(!e)return;if(!confirm('هل تريد حذف التجربة «'+e.n+'» من المكتبة؟'))return;removedExperiments.push(expKey(e));put('removedExperiments',removedExperiments);customExperiments=customExperiments.filter(x=>expKey(x)!==expKey(e));put('experiments',customExperiments);experiments=experiments.filter((x,j)=>j!==i);render()};
+
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>page(b.dataset.page));
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>page(b.dataset.go));
+
+function render(){
+
+$('sPrep').textContent=preps.length;
+$('sDone').textContent=completed.length;
+$('sStock').textContent=stock.length;
+$('rTotal').textContent=preps.length;
+$('rComplete').textContent=completed.length;
+
+$('recent').innerHTML=preps.slice(0,4).map(p=>
+`<div class="item">
+<strong>${esc(p.name)}</strong>
+<span class="muted">${esc(p.date)} · ${esc(p.subject)} · ${esc(p.term)}</span>
+</div>`
+).join('')||'<div class="empty">لا توجد تحضيرات مسجلة بعد.</div>';
+
+let y=$('planYear').value||'السنة الأولى المشتركة';
+
+$('courses').innerHTML=(courses[y]||[]).map(c=>
+`<div class="item">
+<strong>${esc(c)}</strong>
+<span class="muted">يُربط بالمقرر والفصل بعد مطابقة توزيع المنهج الرسمي.</span>
+</div>`
+).join('');
+
+let f=$('filterSubject').value;
+let q=$('expSearch').value.trim();
+
+$('expList').innerHTML=experiments
+.filter(e=>(f==='الكل'||e.s===f)&&(!q||(e.n+e.s).includes(q)))
+.map(e=>{
+let i=experiments.indexOf(e);
+
+return `<div class="item">
+
+<strong>${esc(e.n)}</strong>
+
+<span class="tag">${esc(e.s)}</span>
+<span class="tag warn">${esc(e.t)}</span>
+
+<p class="muted">${esc(e.y)}</p>
+
+<p><b>هدف التجربة:</b> ${esc(e.goal||'غير محدد')}</p>
+
+<p class="muted"><b>الأدوات والمواد:</b> ${esc(e.tools||'غير محددة')}</p>
+
+<p class="muted"><b>خطوات التنفيذ:</b> ${esc(e.steps||'غير محددة')}</p>
+
+<p class="muted"><b>احتياطات السلامة:</b> ${esc(e.risk||'غير محددة')}</p>
+
+<div class="actions no-print">
+
+<button class="secondary" onclick="editExperiment(${i})">✏️ تعديل التجربة</button>
+
+<button class="secondary" onclick="useExp(${i})">إنشاء تحضير لهذه التجربة</button>
+
+<button class="delete-btn" onclick="deleteExperiment(${i})">🗑️ حذف</button>
+
+</div>
+</div>`
+}).join('')||'<div class="empty">لا توجد نتائج مطابقة.</div>';
+
+$('prepList').innerHTML=preps.map(p=>prepCard(p)).join('')||'<div class="empty">لا توجد تحضيرات.</div>';
+
+$('reportList').innerHTML=$('prepList').innerHTML;
+
+$('stockList').innerHTML=stock.map((x,i)=>
+`<div class="item">
+<strong>${esc(x.name)} <span class="tag">${esc(x.type)}</span></strong>
+<p class="muted">الكمية: ${x.qty} ${esc(x.unit)} · حد التنبيه: ${x.min}</p>
+${x.qty<=x.min?'<span class="tag danger">كمية منخفضة</span>':''}
+<button class="btn secondary" onclick="delStock(${i})">حذف الصنف</button>
+</div>`
+).join('')||'<div class="empty">لم تتم إضافة أصناف للمخزون.</div>';
+
+renderLoss();
+renderOpenClose();
+}
+
+function prepCard(p){
+return `<div class="item">
+<strong>${esc(p.name)}
+${completed.includes(p.id)?'<span class="tag success">تم التجهيز</span>':'<span class="tag warn">قيد التجهيز</span>'}
+</strong>
+
+<span class="muted">${esc(p.date)} · ${esc(p.term)} · ${esc(p.year)} · ${esc(p.subject)} · الحصة ${esc(p.period)}</span>
+
+<p class="muted">${esc(p.materials||'لا توجد تفاصيل مواد')}</p>
+
+<div class="actions no-print">
+<button class="secondary" onclick="toggleDone('${p.id}')">${completed.includes(p.id)?'إلغاء التأكيد':'تأكيد التجهيز'}</button>
+<button class="secondary" onclick="delPrep('${p.id}')">حذف</button>
+</div>
+</div>`
+}
+
+function esc(s){
+return String(s??'').replace(/[&<>"']/g,c=>({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#39;'
+}[c]))
+}
+
+window.useExp=i=>{
+let e=experiments[i];
+$('pName').value=e.n;
+$('pSubject').value=e.s;
+$('pYear').value=e.y;
+$('pMaterials').value=e.tools;
+page('prep')
+};
+
+window.toggleDone=id=>{
+completed=completed.includes(id)?completed.filter(x=>x!==id):[...completed,id];
+put('completed',completed);
+render()
+};
+
+window.delPrep=id=>{
+preps=preps.filter(x=>x.id!==id);
+completed=completed.filter(x=>x!==id);
+put('preps',preps);
+put('completed',completed);
+render()
+};
+
+window.delStock=i=>{
+stock.splice(i,1);
+put('stock',stock);
+render()
+};
+
+window.deleteExperiment=i=>{
+const e=experiments[i];
+if(!e)return;
+
+if(!confirm('هل تريد حذف التجربة «'+e.n+'» من المكتبة؟'))return;
+
+removedExperiments.push(expKey(e));
+put('removedExperiments',removedExperiments);
+
+customExperiments=customExperiments.filter(x=>expKey(x)!==expKey(e));
+put('experiments',customExperiments);
+
+experiments=experiments.filter((x,j)=>j!==i);
+render()
+};
+
+// ===== تعديل التجربة =====
+
+window.editExperiment=i=>{
+let e=experiments[i];
+if(!e)return;
+
+editExpIndex=i;
+
+$('eName').value=e.n||'';
+$('eSubject').value=e.s||'الكيمياء';
+$('eYear').value=e.y||'السنة الأولى المشتركة';
+$('eGoal').value=e.goal||'';
+$('eTools').value=e.tools||'';
+$('eSteps').value=e.steps||'';
+$('eRisk').value=e.risk||'';
+
+let details=$('expForm').closest('details');
+details.open=true;
+
+$('eName').focus();
+
+details.scrollIntoView({
+behavior:'smooth',
+block:'center'
+});
+
+const btn=$('expForm').querySelector('button[type="submit"]');
+btn.textContent='💾 حفظ تعديل التجربة';
+};
 
 // محاضر الفقد والكسر وفتح وإغلاق المختبر
+
 function renderLoss(){
-$('lossList').innerHTML=lossReports.map((x,i)=>`<div class="item"><strong>محضر ${esc(x.type)} — ${esc(x.item)}</strong><span class="muted">${esc(x.date)} · الكمية: ${esc(x.qty)} · ${esc(x.subject||'')}</span><p class="muted">${esc(x.details)}</p><div class="actions no-print"><button class="secondary" onclick="printLoss(${i})">🖨️ طباعة المحضر</button><button class="secondary" onclick="deleteLoss(${i})">حذف</button></div></div>`).join('')||'<div class="empty">لا توجد محاضر مسجلة.</div>';
+$('lossList').innerHTML=lossReports.map((x,i)=>
+`<div class="item">
+<strong>محضر ${esc(x.type)} — ${esc(x.item)}</strong>
+<span class="muted">${esc(x.date)} · الكمية: ${esc(x.qty)} · ${esc(x.subject||'')}</span>
+<p class="muted">${esc(x.details)}</p>
+<div class="actions no-print">
+<button class="secondary" onclick="printLoss(${i})">🖨️ طباعة المحضر</button>
+<button class="secondary" onclick="deleteLoss(${i})">حذف</button>
+</div>
+</div>`
+).join('')||'<div class="empty">لا توجد محاضر مسجلة.</div>';
 }
+
 function renderOpenClose(){
-$('ocList').innerHTML=openCloseLogs.map((x,i)=>`<div class="item"><strong>${esc(x.type)}</strong><span class="muted">${esc(x.date)} · ${esc(x.time)} · ${esc(x.term)}</span><p class="muted">حالة المختبر: ${esc(x.condition)} · المسؤول: ${esc(x.responsible)}</p><p class="muted">${esc(x.equipment)}</p><p>${esc(x.notes)}</p><div class="actions no-print"><button class="secondary" onclick="printOpenClose(${i})">🖨️ طباعة المحضر</button><button class="secondary" onclick="deleteOpenClose(${i})">حذف</button></div></div>`).join('')||'<div class="empty">لا توجد سجلات فتح أو إغلاق.</div>';
+$('ocList').innerHTML=openCloseLogs.map((x,i)=>
+`<div class="item">
+<strong>${esc(x.type)}</strong>
+<span class="muted">${esc(x.date)} · ${esc(x.time)} · ${esc(x.term)}</span>
+<p class="muted">حالة المختبر: ${esc(x.condition)} · المسؤول: ${esc(x.responsible)}</p>
+<p class="muted">${esc(x.equipment)}</p>
+<p>${esc(x.notes)}</p>
+<div class="actions no-print">
+<button class="secondary" onclick="printOpenClose(${i})">🖨️ طباعة المحضر</button>
+<button class="secondary" onclick="deleteOpenClose(${i})">حذف</button>
+</div>
+</div>`
+).join('')||'<div class="empty">لا توجد سجلات فتح أو إغلاق.</div>';
 }
-$('lossForm').onsubmit=e=>{e.preventDefault();lossReports.unshift({id:Date.now().toString(),type:$('lType').value,date:$('lDate').value,item:$('lItem').value.trim(),qty:$('lQty').value,subject:$('lSubject').value.trim(),place:$('lPlace').value.trim(),details:$('lDetails').value.trim(),action:$('lAction').value.trim(),reporter:$('lReporter').value.trim()});put('lossReports',lossReports);e.target.reset();$('lDate').value=new Date().toISOString().slice(0,10);$('lQty').value=1;render();alert('تم حفظ محضر الفقد / الكسر.')};
-$('ocForm').onsubmit=e=>{e.preventDefault();openCloseLogs.unshift({id:Date.now().toString(),type:$('ocType').value,date:$('ocDate').value,time:$('ocTime').value,term:$('ocTerm').value,condition:$('ocCondition').value,responsible:$('ocResponsible').value.trim(),equipment:$('ocEquipment').value.trim(),notes:$('ocNotes').value.trim()});put('openCloseLogs',openCloseLogs);e.target.reset();$('ocDate').value=new Date().toISOString().slice(0,10);render();alert('تم حفظ سجل فتح / إغلاق المختبر.')};
-window.deleteLoss=i=>{if(!confirm('حذف هذا المحضر؟'))return;lossReports.splice(i,1);put('lossReports',lossReports);render()};
-window.deleteOpenClose=i=>{if(!confirm('حذف هذا السجل؟'))return;openCloseLogs.splice(i,1);put('openCloseLogs',openCloseLogs);render()};
+
+$('lossForm').onsubmit=e=>{
+e.preventDefault();
+
+lossReports.unshift({
+id:Date.now().toString(),
+type:$('lType').value,
+date:$('lDate').value,
+item:$('lItem').value.trim(),
+qty:$('lQty').value,
+subject:$('lSubject').value.trim(),
+place:$('lPlace').value.trim(),
+details:$('lDetails').value.trim(),
+action:$('lAction').value.trim(),
+reporter:$('lReporter').value.trim()
+});
+
+put('lossReports',lossReports);
+e.target.reset();
+$('lDate').value=new Date().toISOString().slice(0,10);
+$('lQty').value=1;
+render();
+alert('تم حفظ محضر الفقد / الكسر.')
+};
+
+$('ocForm').onsubmit=e=>{
+e.preventDefault();
+
+openCloseLogs.unshift({
+id:Date.now().toString(),
+type:$('ocType').value,
+date:$('ocDate').value,
+time:$('ocTime').value,
+term:$('ocTerm').value,
+condition:$('ocCondition').value,
+responsible:$('ocResponsible').value.trim(),
+equipment:$('ocEquipment').value.trim(),
+notes:$('ocNotes').value.trim()
+});
+
+put('openCloseLogs',openCloseLogs);
+e.target.reset();
+$('ocDate').value=new Date().toISOString().slice(0,10);
+render();
+alert('تم حفظ سجل فتح / إغلاق المختبر.')
+};
+
+window.deleteLoss=i=>{
+if(!confirm('حذف هذا المحضر؟'))return;
+lossReports.splice(i,1);
+put('lossReports',lossReports);
+render()
+};
+
+window.deleteOpenClose=i=>{
+if(!confirm('حذف هذا السجل؟'))return;
+openCloseLogs.splice(i,1);
+put('openCloseLogs',openCloseLogs);
+render()
+};
+
 function printRecord(title,rows){
-const w=window.open('','_blank');if(!w){alert('اسمح بالنوافذ المنبثقة للطباعة.');return}
+const w=window.open('','_blank');
+if(!w){alert('اسمح بالنوافذ المنبثقة للطباعة.');return}
+
 w.document.write(`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>${esc(title)}</title><style>body{font-family:Tahoma,Arial;padding:30px;color:#19313e}h2{text-align:center;color:#123b50;margin-bottom:30px}table{width:100%;border-collapse:collapse}td{border:1px solid #9baeb4;padding:12px;line-height:1.8}td:first-child{width:28%;background:#edf3f5;font-weight:bold}.sign{margin-top:65px;display:flex;justify-content:space-between}@page{size:A4;margin:15mm}</style></head><body><h2>${esc(title)}</h2><table>${rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1]||'—')}</td></tr>`).join('')}</table><div class="sign"><span>محرر المحضر: ................................</span><span>التوقيع: ........................</span></div><script>window.onload=()=>window.print();<\/script></body></html>`);
+
 w.document.close();
 }
-window.printLoss=i=>{const x=lossReports[i];if(!x)return;printRecord('محضر '+x.type+' في المختبر المدرسي',[['التاريخ',x.date],['نوع الحالة',x.type],['الصنف / الأداة',x.item],['الكمية',x.qty],['المادة / القسم',x.subject],['مكان الحالة',x.place],['وصف الحالة وظروفها',x.details],['الإجراء المتخذ',x.action],['محرر المحضر',x.reporter]])};
-window.printOpenClose=i=>{const x=openCloseLogs[i];if(!x)return;printRecord('محضر '+x.type+' للمختبر المدرسي',[['التاريخ',x.date],['الوقت',x.time],['الفصل الدراسي',x.term],['حالة المختبر',x.condition],['المسؤول',x.responsible],['حالة الأجهزة والأدوات والمواد',x.equipment],['ملاحظات وإجراءات',x.notes]])};
 
-$('prepForm').onsubmit=e=>{e.preventDefault();let p={id:Date.now().toString(),date:$('pDate').value,term:$('pTerm').value,year:$('pYear').value,subject:$('pSubject').value,name:$('pName').value,period:$('pPeriod').value,groups:$('pGroups').value,materials:$('pMaterials').value,notes:$('pNotes').value};preps.unshift(p);put('preps',preps);e.target.reset();$('pDate').value=new Date().toISOString().slice(0,10);render();alert('تم حفظ التحضير على هذا الجهاز.')};
-$('stockForm').onsubmit=e=>{e.preventDefault();stock.push({name:$('iName').value.trim(),type:$('iType').value,qty:+$('iQty').value,unit:$('iUnit').value.trim(),min:+$('iMin').value});put('stock',stock);e.target.reset();$('iMin').value=1;render()};
-$('expForm').onsubmit=e=>{e.preventDefault();let x={n:$('eName').value.trim(),s:$('eSubject').value,y:$('eYear').value,t:'أضيفت بواسطة محضر المختبر',goal:'',tools:$('eTools').value,steps:'',risk:'',custom:true};if(!x.n)return alert('اكتب اسم التجربة.');customExperiments.push(x);experiments.push(x);put('experiments',customExperiments);e.target.reset();render();alert('تمت إضافة التجربة إلى المكتبة على هذا الجهاز.')};
-$('importFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let data=JSON.parse(await f.text());if(!Array.isArray(data.preps)||!Array.isArray(data.stock))throw new Error('invalid');preps=data.preps;stock=data.stock;completed=Array.isArray(data.completed)?data.completed:[];customExperiments=Array.isArray(data.experiments)?data.experiments:[];removedExperiments=Array.isArray(data.removedExperiments)?data.removedExperiments:[];lossReports=Array.isArray(data.lossReports)?data.lossReports:[];openCloseLogs=Array.isArray(data.openCloseLogs)?data.openCloseLogs:[];put('removedExperiments',removedExperiments);put('lossReports',lossReports);put('openCloseLogs',openCloseLogs);['preps','stock','completed','experiments'].forEach(k=>put(k,{preps,stock,completed,experiments:customExperiments}[k]));experiments=experiments.filter(x=>!x.custom).concat(customExperiments);render();alert('تم استعادة البيانات بنجاح.') }catch(err){alert('تعذر قراءة النسخة الاحتياطية. اختر ملف JSON صادر من البرنامج.')}};
-$('filterSubject').onchange=render;$('expSearch').oninput=render;$('planYear').onchange=render;$('planTerm').onchange=render;
-$('exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({preps,stock,completed,experiments:customExperiments,removedExperiments,lossReports,openCloseLogs,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='school-lab-backup.json';a.click();URL.revokeObjectURL(a.href)};
+window.printLoss=i=>{
+const x=lossReports[i];
+if(!x)return;
+
+printRecord('محضر '+x.type+' في المختبر المدرسي',[
+['التاريخ',x.date],
+['نوع الحالة',x.type],
+['الصنف / الأداة',x.item],
+['الكمية',x.qty],
+['المادة / القسم',x.subject],
+['مكان الحالة',x.place],
+['وصف الحالة وظروفها',x.details],
+['الإجراء المتخذ',x.action],
+['محرر المحضر',x.reporter]
+])
+};
+
+window.printOpenClose=i=>{
+const x=openCloseLogs[i];
+if(!x)return;
+
+printRecord('محضر '+x.type+' للمختبر المدرسي',[
+['التاريخ',x.date],
+['الوقت',x.time],
+['الفصل الدراسي',x.term],
+['حالة المختبر',x.condition],
+['المسؤول',x.responsible],
+['حالة الأجهزة والأدوات والمواد',x.equipment],
+['ملاحظات وإجراءات',x.notes]
+])
+};
+
+$('prepForm').onsubmit=e=>{
+e.preventDefault();
+
+let p={
+id:Date.now().toString(),
+date:$('pDate').value,
+term:$('pTerm').value,
+year:$('pYear').value,
+subject:$('pSubject').value,
+name:$('pName').value,
+period:$('pPeriod').value,
+groups:$('pGroups').value,
+materials:$('pMaterials').value,
+notes:$('pNotes').value
+};
+
+preps.unshift(p);
+put('preps',preps);
+e.target.reset();
+$('pDate').value=new Date().toISOString().slice(0,10);
+render();
+alert('تم حفظ التحضير على هذا الجهاز.')
+};
+
+$('stockForm').onsubmit=e=>{
+e.preventDefault();
+
+stock.push({
+name:$('iName').value.trim(),
+type:$('iType').value,
+qty:+$('iQty').value,
+unit:$('iUnit').value.trim(),
+min:+$('iMin').value
+});
+
+put('stock',stock);
+e.target.reset();
+$('iMin').value=1;
+render()
+};
+
+// ===== إضافة وتعديل التجارب =====
+
+$('expForm').onsubmit=e=>{
+e.preventDefault();
+
+let x={
+n:$('eName').value.trim(),
+s:$('eSubject').value,
+y:$('eYear').value,
+t:'أضيفت بواسطة محضر المختبر',
+goal:$('eGoal').value.trim(),
+tools:$('eTools').value.trim(),
+steps:$('eSteps').value.trim(),
+risk:$('eRisk').value.trim(),
+custom:true
+};
+
+if(!x.n)return alert('اكتب اسم التجربة.');
+
+if(editExpIndex>=0){
+
+let old=experiments[editExpIndex];
+
+if(old.custom){
+
+let ci=customExperiments.findIndex(z=>z===old);
+
+if(ci>=0){
+customExperiments[ci]=x;
+}else{
+customExperiments.push(x);
+}
+
+}else{
+
+removedExperiments.push(expKey(old));
+put('removedExperiments',removedExperiments);
+customExperiments.push(x);
+
+}
+
+put('experiments',customExperiments);
+
+experiments=experiments.filter(z=>z!==old);
+experiments.push(x);
+
+editExpIndex=-1;
+
+e.target.reset();
+
+document.querySelector('#expForm').closest('details').open=false;
+
+const btn=$('expForm').querySelector('button[type="submit"]');
+btn.textContent='حفظ التجربة في مكتبتي';
+
+render();
+
+alert('تم تعديل التجربة وحفظ التغييرات بنجاح.');
+return;
+}
+
+customExperiments.push(x);
+experiments.push(x);
+
+put('experiments',customExperiments);
+
+e.target.reset();
+
+const btn=$('expForm').querySelector('button[type="submit"]');
+btn.textContent='حفظ التجربة في مكتبتي';
+
+render();
+
+alert('تمت إضافة التجربة إلى المكتبة على هذا الجهاز.')
+};
+
+// استعادة نسخة احتياطية
+
+$('importFile').onchange=async e=>{
+let f=e.target.files[0];
+if(!f)return;
+
+try{
+
+let data=JSON.parse(await f.text());
+
+if(!Array.isArray(data.preps)||!Array.isArray(data.stock))
+throw new Error('invalid');
+
+preps=data.preps;
+stock=data.stock;
+completed=Array.isArray(data.completed)?data.completed:[];
+customExperiments=Array.isArray(data.experiments)?data.experiments:[];
+removedExperiments=Array.isArray(data.removedExperiments)?data.removedExperiments:[];
+lossReports=Array.isArray(data.lossReports)?data.lossReports:[];
+openCloseLogs=Array.isArray(data.openCloseLogs)?data.openCloseLogs:[];
+
+put('removedExperiments',removedExperiments);
+put('lossReports',lossReports);
+put('openCloseLogs',openCloseLogs);
+
+['preps','stock','completed','experiments'].forEach(k=>
+put(k,{preps,stock,completed,experiments:customExperiments}[k])
+);
+
+experiments=experiments.filter(x=>!x.custom).concat(customExperiments);
+
+render();
+
+alert('تم استعادة البيانات بنجاح.')
+
+}catch(err){
+alert('تعذر قراءة النسخة الاحتياطية. اختر ملف JSON صادر من البرنامج.')
+}
+};
+
+$('filterSubject').onchange=render;
+$('expSearch').oninput=render;
+$('planYear').onchange=render;
+$('planTerm').onchange=render;
+
+$('exportBtn').onclick=()=>{
+let blob=new Blob([
+JSON.stringify({
+preps,
+stock,
+completed,
+experiments:customExperiments,
+removedExperiments,
+lossReports,
+openCloseLogs,
+exportedAt:new Date().toISOString()
+},null,2)
+],{type:'application/json'});
+
+let a=document.createElement('a');
+a.href=URL.createObjectURL(blob);
+a.download='school-lab-backup.json';
+a.click();
+URL.revokeObjectURL(a.href)
+};
 
 // استيراد ملفات متعددة الصيغ إلى المخزون ومكتبة التجارب
-if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-function importNorm(v){return String(v??'').trim().replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/[ًٌٍَُِّْـ]/g,'').replace(/\s+/g,' ').toLowerCase()}
-function importPick(o,keys){const wanted=keys.map(importNorm);for(const k of Object.keys(o)){if(wanted.includes(importNorm(k)))return String(o[k]??'').trim()}return ''}
-function importTable(rows){if(!rows||rows.length<2)return [];const headers=rows[0].map(importNorm);return rows.slice(1).filter(r=>r.some(v=>String(v??'').trim())).map(r=>Object.fromEntries(headers.map((h,i)=>[h,r[i]??''])))}
-function parseDelimited(text,delimiter){const rows=[];let row=[],cell='',quoted=false;const src=String(text||'').replace(/^\uFEFF/,'');for(let i=0;i<src.length;i++){const ch=src[i];if(ch==='"'){if(quoted&&src[i+1]==='"'){cell+='"';i++}else quoted=!quoted}else if(ch===delimiter&&!quoted){row.push(cell.trim());cell=''}else if((ch==='\n'||ch==='\r')&&!quoted){if(ch==='\r'&&src[i+1]==='\n')i++;row.push(cell.trim());if(row.some(v=>v!==''))rows.push(row);row=[];cell=''}else cell+=ch}row.push(cell.trim());if(row.some(v=>v!==''))rows.push(row);return rows}
-function importTextRows(txt,delimiter){const source=String(txt||'');const delim=delimiter||(source.includes('\t')?'\t':source.includes(';')?';':source.includes('|')?'|':',');return importTable(parseDelimited(source,delim))}
-async function readImportFile(file){const ext=file.name.split('.').pop().toLowerCase(),ab=await file.arrayBuffer();
-if(['xlsx','xls'].includes(ext)){if(!window.XLSX)throw Error('تعذر تحميل مكتبة Excel؛ تحقق من اتصال الإنترنت.');const wb=XLSX.read(ab,{type:'array'});return wb.SheetNames.flatMap(n=>importTable(XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,defval:''})))}
-if(ext==='docx'){if(!window.mammoth)throw Error('تعذر تحميل مكتبة Word؛ تحقق من اتصال الإنترنت.');const html=await mammoth.convertToHtml({arrayBuffer:ab}),doc=new DOMParser().parseFromString(html.value,'text/html');let out=[];doc.querySelectorAll('table').forEach(t=>out.push(...importTable([...t.querySelectorAll('tr')].map(tr=>[...tr.querySelectorAll('th,td')].map(c=>c.textContent.trim())))));if(out.length)return out;return importTextRows((await mammoth.extractRawText({arrayBuffer:ab})).value)}
-if(ext==='pdf'){if(!window.pdfjsLib)throw Error('تعذر تحميل مكتبة PDF؛ تحقق من اتصال الإنترنت.');const pdf=await pdfjsLib.getDocument({data:ab}).promise;let txt='';for(let n=1;n<=pdf.numPages;n++){const c=await(await pdf.getPage(n)).getTextContent();let line='';for(const it of c.items){line+=it.str+(it.hasEOL?'\n':' ')}txt+=line+'\n'}return importTextRows(txt)}
-if(['csv','txt','tsv'].includes(ext)){const txt=new TextDecoder('utf-8').decode(ab);return importTextRows(txt,ext==='tsv'?'\t':undefined)}
-if(ext==='json'){const data=JSON.parse(new TextDecoder('utf-8').decode(ab));const arr=Array.isArray(data)?data:(Array.isArray(data.items)?data.items:(Array.isArray(data.stock)?data.stock:null));if(!arr)throw Error('ملف JSON يجب أن يحتوي قائمة أصناف أو مصفوفة items أو stock.');if(!arr.length)return [];const keys=Object.keys(arr[0]);return importTable([keys,...arr.map(o=>keys.map(k=>o[k]??''))])}
-if(ext==='xml'){const doc=new DOMParser().parseFromString(new TextDecoder('utf-8').decode(ab),'application/xml');if(doc.querySelector('parsererror'))throw Error('ملف XML غير صالح.');const items=[...doc.querySelectorAll('item, product, row, record')];if(!items.length)throw Error('لم أجد عناصر أصناف داخل XML.');const keys=[...new Set(items.flatMap(x=>[...x.children].map(c=>c.tagName)))];return importTable([keys,...items.map(x=>keys.map(k=>x.querySelector(k)?.textContent||''))])}
-if(['html','htm'].includes(ext)){const doc=new DOMParser().parseFromString(new TextDecoder('utf-8').decode(ab),'text/html');let out=[];doc.querySelectorAll('table').forEach(t=>out.push(...importTable([...t.querySelectorAll('tr')].map(tr=>[...tr.querySelectorAll('th,td')].map(c=>c.textContent.trim())))));if(out.length)return out;throw Error('لم أجد جدولاً داخل ملف HTML.')}
-throw Error('الصيغ المدعومة: XLSX وXLS وDOCX وPDF النصي وCSV وTXT وTSV وJSON وXML وHTML.')}
-async function importExperimentsFile(){const el=$('experimentImportFile'),f=el.files[0];if(!f){alert('اختر ملف التجارب أولاً.');return}try{const rows=await readImportFile(f),add=[];for(const r of rows){const n=importPick(r,['اسم التجربه','التجربه','اسم النشاط','العنوان']);if(n)add.push({n,s:importPick(r,['الماده','المقرر'])||'الكيمياء',y:importPick(r,['السنه','الصف','المستوى'])||'السنة الأولى المشتركة',t:'مستورد من ملف',goal:'',tools:importPick(r,['الادوات والمواد','الادوات','المواد والادوات','المواد']),steps:'',risk:'',custom:true})}if(!add.length)throw Error('لم أجد تجارب. استخدم عناوين: اسم التجربة، المادة، السنة، الأدوات والمواد.');if(!confirm('تم العثور على '+add.length+' تجربة. هل تضيفها للمكتبة؟'))return;customExperiments.push(...add);put('experiments',customExperiments);experiments=experiments.filter(x=>!x.custom).concat(customExperiments);render();alert('تم استيراد '+add.length+' تجربة بنجاح.');el.value=''}catch(e){alert('تعذر الاستيراد: '+e.message+'\nPDF المصور يحتاج إلى OCR ولا يمكن قراءته مباشرة.')}}
-async function importStockFile(){const el=$('stockImportFile'),f=el.files[0];if(!f){alert('اختر ملف المخزون أولاً.');return}try{const rows=await readImportFile(f),add=[];for(const r of rows){const n=importPick(r,['اسم الصنف','الصنف','اسم الماده','اسم الاداه','الاداه','اسم المنتج','البيان']);if(n){const q=importPick(r,['الكميه','الرصيد','عدد','العدد','المتوفر']);const qtyText=String(q||0).replace(/[٬،]/g,'').replace(/,/g,'.').replace(/[^0-9.\-]/g,'');add.push({name:n,type:importPick(r,['التصنيف','النوع','الفئة'])||'أدوات عامة',qty:Number(qtyText)||0,unit:importPick(r,['الوحده','وحده القياس','الوحدة'])||'قطعة',min:Number(String(importPick(r,['حد التنبيه','الحد الادنى','اقل كمية'])||1).replace(/[^0-9.\-]/g,''))||0,expiry:importPick(r,['الصلاحيه','تاريخ الصلاحيه'])||''})}}
-if(!add.length)throw Error('لم أجد أصنافاً. اجعل الصف الأول عناوين مثل: اسم الصنف، التصنيف، الكمية، الوحدة، حد التنبيه.');const preview=add.slice(0,8).map(x=>`${x.name} — ${x.qty} ${x.unit}`).join('\n');if(!confirm(`تم العثور على ${add.length} صنفاً.\n\nمعاينة:\n${preview}${add.length>8?'\n...':''}\n\nسيتم إضافة الأصناف إلى المخزون الحالي دون حذف الموجود. هل تتابع؟`))return;let added=0,merged=0;for(const x of add){const old=stock.find(y=>importNorm(y.name)===importNorm(x.name)&&importNorm(y.type||'')===importNorm(x.type)&&importNorm(y.unit||'')===importNorm(x.unit));if(old){old.qty=(Number(old.qty)||0)+x.qty;if(x.min)old.min=x.min;if(x.expiry)old.expiry=x.expiry;merged++}else{stock.push(x);added++}}put('stock',stock);render();alert(`اكتمل الاستيراد.\nأصناف جديدة: ${added}\nأصناف دُمجت كمياتها: ${merged}`);el.value=''}catch(e){alert('تعذر الاستيراد: '+e.message+'\nPDF المصوّر يحتاج إلى OCR ولا يمكن قراءته مباشرة.')}}
-$('pDate').value=new Date().toISOString().slice(0,10);$('lDate').value=new Date().toISOString().slice(0,10);$('ocDate').value=new Date().toISOString().slice(0,10);render();
-</script></body></html>
+
+if(window.pdfjsLib)
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+function importNorm(v){
+return String(v??'').trim()
+.replace(/[أإآ]/g,'ا')
+.replace(/ة/g,'ه')
+.replace(/[ًٌٍَُِّْـ]/g,'')
+.replace(/\s+/g,' ')
+.toLowerCase()
+}
+
+function importPick(o,keys){
+const wanted=keys.map(importNorm);
+for(const k of Object.keys(o)){
+if(wanted.includes(importNorm(k)))
+return String(o[k]??'').trim()
+}
+return ''
+}
+
+function importTable(rows){
+if(!rows||rows.length<2)return [];
+
+const headers=rows[0].map(importNorm);
+
+return rows.slice(1)
+.filter(r=>r.some(v=>String(v??'').trim()))
+.map(r=>Object.fromEntries(headers.map((h,i)=>[h,r[i]??''])))
+}
+
+function parseDelimited(text,delimiter){
+const rows=[];
+let row=[],cell='',quoted=false;
+const src=String(text||'').replace(/^\uFEFF/,'');
+
+for(let i=0;i<src.length;i++){
+const ch=src[i];
+
+if(ch==='"'){
+if(quoted&&src[i+1]==='"'){
+cell+='"';
+i++
+}else quoted=!quoted
+}else if(ch===delimiter&&!quoted){
+row.push(cell.trim());
+cell=''
+}else if((ch==='\n'||ch==='\r')&&!quoted){
+if(ch==='\r'&&src[i+1]==='\n')i++;
+row.push(cell.trim());
+
+if(row.some(v=>v!==''))rows.push(row);
+
+row=[];
+cell=''
+}else cell+=ch
+}
+
+row.push(cell.trim());
+if(row.some(v=>v!==''))rows.push(row);
+
+return rows
+}
+
+function importTextRows(txt,delimiter){
+const source=String(txt||'');
+const delim=delimiter||(source.includes('\t')?'\t':source.includes(';')?';':source.includes('|')?'|':',');
+return importTable(parseDelimited(source,delim))
+}
+
+async function readImportFile(file){
+
+const ext=file.name.split('.').pop().toLowerCase();
+const ab=await file.arrayBuffer();
+
+if(['xlsx','xls'].includes(ext)){
+if(!window.XLSX)throw Error('تعذر تحميل مكتبة Excel؛ تحقق من اتصال الإنترنت.');
+
+const wb=XLSX.read(ab,{type:'array'});
+
+return wb.SheetNames.flatMap(n=>
+importTable(XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,defval:''}))
+)
+}
+
+if(ext==='docx'){
+if(!window.mammoth)throw Error('تعذر تحميل مكتبة Word؛ تحقق من اتصال الإنترنت.');
+
+const html=await mammoth.convertToHtml({arrayBuffer:ab});
+const doc=new DOMParser().parseFromString(html.value,'text/html');
+
+let out=[];
+
+doc.querySelectorAll('table').forEach(t=>
+out.push(...importTable([...t.querySelectorAll('tr')].map(tr=>[...tr.querySelectorAll('th,td')].map(c=>c.textContent.trim()))))
+);
+
+if(out.length)return out;
+
+return importTextRows((await mammoth.extractRawText({arrayBuffer:ab})).value)
+}
+
+if(ext==='pdf'){
+if(!window.pdfjsLib)throw Error('تعذر تحميل مكتبة PDF؛ تحقق من اتصال الإنترنت.');
+
+const pdf=await pdfjsLib.getDocument({data:ab}).promise;
+let txt='';
+
+for(let n=1;n<=pdf.numPages;n++){
+const c=await(await pdf.getPage(n)).getTextContent();
+let line='';
+
+for(const it of c.items){
+line+=it.str+(it.hasEOL?'\n':' ')
+}
+
+txt+=line+'\n'
+}
+
+return importTextRows(txt)
+}
+
+if(['csv','txt','tsv'].includes(ext)){
+const txt=new TextDecoder('utf-8').decode(ab);
+return importTextRows(txt,ext==='tsv'?'\t':undefined)
+}
+
+if(ext==='json'){
+const data=JSON.parse(new TextDecoder('utf-8').decode(ab));
+
+const arr=Array.isArray(data)?data:
+(Array.isArray(data.items)?data.items:
+(Array.isArray(data.stock)?data.stock:null));
+
+if(!arr)throw Error('ملف JSON يجب أن يحتوي قائمة أصناف أو مصفوفة items أو stock.');
+
+if(!arr.length)return [];
+
+const keys=Object.keys(arr[0]);
+
+return importTable([keys,...arr.map(o=>keys.map(k=>o[k]??''))])
+}
+
+if(ext==='xml'){
+const doc=new DOMParser().parseFromString(new TextDecoder('utf-8').decode(ab),'application/xml');
+
+if(doc.querySelector('parsererror'))throw Error('ملف XML غير صالح.');
+
+const items=[...doc.querySelectorAll('item, product, row, record')];
+
+if(!items.length)throw Error('لم أجد عناصر أصناف داخل XML.');
+
+const keys=[...new Set(items.flatMap(x=>[...x.children].map(c=>c.tagName)))];
+
+return importTable([keys,...items.map(x=>keys.map(k=>x.querySelector(k)?.textContent||''))])
+}
+
+if(['html','htm'].includes(ext)){
+const doc=new DOMParser().parseFromString(new TextDecoder('utf-8').decode(ab),'text/html');
+
+let out=[];
+
+doc.querySelectorAll('table').forEach(t=>
+out.push(...importTable([...t.querySelectorAll('tr')].map(tr=>[...tr.querySelectorAll('th,td')].map(c=>c.textContent.trim()))))
+);
+
+if(out.length)return out;
+
+throw Error('لم أجد جدولاً داخل ملف HTML.')
+}
+
+throw Error('الصيغ المدعومة: XLSX وXLS وDOCX وPDF النصي وCSV وTXT وTSV وJSON وXML وHTML.')
+}
+
+async function importExperimentsFile(){
+
+const el=$('experimentImportFile');
+const f=el.files[0];
+
+if(!f){
+alert('اختر ملف التجارب أولاً.');
+return
+}
+
+try{
+
+const rows=await readImportFile(f);
+const add=[];
+
+for(const r of rows){
+
+const n=importPick(r,['اسم التجربه','التجربه','اسم النشاط','العنوان']);
+
+if(n){
+
+add.push({
+n,
+s:importPick(r,['الماده','المقرر'])||'الكيمياء',
+y:importPick(r,['السنه','الصف','المستوى'])||'السنة الأولى المشتركة',
+t:'مستورد من ملف',
+goal:importPick(r,['هدف التجربه','الهدف','اهداف التجربه'])||'',
+tools:importPick(r,['الادوات والمواد','الادوات','المواد والادوات','المواد']),
+steps:importPick(r,['خطوات التنفيذ','الخطوات','طريقة العمل'])||'',
+risk:importPick(r,['السلامه','احتياطات السلامه','مخاطر التجربه'])||'',
+custom:true
+})
+
+}
+}
+
+if(!add.length)
+throw Error('لم أجد تجارب. استخدم عناوين: اسم التجربة، المادة، السنة، الأدوات والمواد.');
+
+if(!confirm('تم العثور على '+add.length+' تجربة. هل تضيفها للمكتبة؟'))
+return;
+
+customExperiments.push(...add);
+
+put('experiments',customExperiments);
+
+experiments=experiments.filter(x=>!x.custom).concat(customExperiments);
+
+render();
+
+alert('تم استيراد '+add.length+' تجربة بنجاح.');
+
+el.value=''
+
+}catch(e){
+alert('تعذر الاستيراد: '+e.message+'\nPDF المصور يحتاج إلى OCR ولا يمكن قراءته مباشرة.')
+}
+}
+
+async function importStockFile(){
+
+const el=$('stockImportFile');
+const f=el.files[0];
+
+if(!f){
+alert('اختر ملف المخزون أولاً.');
+return
+}
+
+try{
+
+const rows=await readImportFile(f);
+const add=[];
+
+for(const r of rows){
+
+const n=importPick(r,['اسم الصنف','الصنف','اسم الماده','اسم الاداه','الاداه','اسم المنتج','البيان']);
+
+if(n){
+
+const q=importPick(r,['الكميه','الرصيد','عدد','العدد','المتوفر']);
+
+const qtyText=String(q||0)
+.replace(/[٬،]/g,'')
+.replace(/,/g,'.')
+.replace(/[^0-9.\-]/g,'');
+
+add.push({
+name:n,
+type:importPick(r,['التصنيف','النوع','الفئة'])||'أدوات عامة',
+qty:Number(qtyText)||0,
+unit:importPick(r,['الوحده','وحده القياس','الوحدة'])||'قطعة',
+min:Number(String(importPick(r,['حد التنبيه','الحد الادنى','اقل كمية'])||1).replace(/[^0-9.\-]/g,''))||0,
+expiry:importPick(r,['الصلاحيه','تاريخ الصلاحيه'])||''
+})
+}
+}
+
+if(!add.length)
+throw Error('لم أجد أصنافاً. اجعل الصف الأول عناوين مثل: اسم الصنف، التصنيف، الكمية، الوحدة، حد التنبيه.');
+
+const preview=add.slice(0,8).map(x=>`${x.name} — ${x.qty} ${x.unit}`).join('\n');
+
+if(!confirm(`تم العثور على ${add.length} صنفاً.\n\nمعاينة:\n${preview}${add.length>8?'\n...':''}\n\nسيتم إضافة الأصناف إلى المخزون الحالي دون حذف الموجود. هل تتابع؟`))
+return;
+
+let added=0,merged=0;
+
+for(const x of add){
+
+const old=stock.find(y=>
+importNorm(y.name)===importNorm(x.name)&&
+importNorm(y.type||'')===importNorm(x.type)&&
+importNorm(y.unit||'')===importNorm(x.unit)
+);
+
+if(old){
+old.qty=(Number(old.qty)||0)+x.qty;
+if(x.min)old.min=x.min;
+if(x.expiry)old.expiry=x.expiry;
+merged++
+}else{
+stock.push(x);
+added++
+}
+}
+
+put('stock',stock);
+render();
+
+alert(`اكتمل الاستيراد.\nأصناف جديدة: ${added}\nأصناف دُمجت كمياتها: ${merged}`);
+
+el.value=''
+
+}catch(e){
+alert('تعذر الاستيراد: '+e.message+'\nPDF المصوّر يحتاج إلى OCR ولا يمكن قراءته مباشرة.')
+}
+}
+
+$('pDate').value=new Date().toISOString().slice(0,10);
+$('lDate').value=new Date().toISOString().slice(0,10);
+$('ocDate').value=new Date().toISOString().slice(0,10);
+
+render();
+
+</script>
+</body>
+</html>
