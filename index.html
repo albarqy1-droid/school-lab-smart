@@ -84,6 +84,9 @@ margin-bottom:14px;font-size:12px
 }
 #cloudBar button{border:0;border-radius:8px;padding:7px 10px;background:#d9e6eb;color:#123b50}
 #cloudStatus{font-weight:bold}
+#passwordModal{position:fixed;inset:0;z-index:99998;background:rgba(10,30,40,.45);display:none;align-items:center;justify-content:center;padding:16px}
+#passwordModal .login-card{max-width:430px}
+#passwordMessage{font-size:13px;line-height:1.7;margin-top:10px}
 @media(max-width:760px){
 .stats{grid-template-columns:repeat(2,1fr)}
 .layout{grid-template-columns:1fr}
@@ -132,6 +135,23 @@ body{background:#fff}
 </div>
 </div>
 
+<!-- نافذة تغيير كلمة المرور -->
+<div id="passwordModal" class="no-print">
+  <div class="login-card">
+    <h2>🔑 تغيير كلمة المرور</h2>
+    <p>أدخل كلمة المرور الحالية ثم كلمة المرور الجديدة. سيتم تحديثها لحسابك.</p>
+    <label>كلمة المرور الحالية</label>
+    <input id="currentPassword" type="password" autocomplete="current-password" placeholder="كلمة المرور الحالية">
+    <label>كلمة المرور الجديدة (8 أحرف على الأقل)</label>
+    <input id="newPassword" type="password" autocomplete="new-password" placeholder="كلمة المرور الجديدة">
+    <label>تأكيد كلمة المرور الجديدة</label>
+    <input id="confirmNewPassword" type="password" autocomplete="new-password" placeholder="أعد كتابة كلمة المرور الجديدة">
+    <button class="btn primary" id="savePasswordBtn" type="button">حفظ كلمة المرور</button>
+    <button class="btn secondary" id="cancelPasswordBtn" type="button">إلغاء</button>
+    <div id="passwordMessage"></div>
+  </div>
+</div>
+
 <header>
 <h1>🧪 المختبر المدرسي</h1>
 <p>ثانوية عبادة بن الصامت بصعبان – تعليم عسير · العام الدراسي 1448–1449هـ</p>
@@ -142,6 +162,7 @@ body{background:#fff}
 <div id="cloudBar" class="no-print">
 <span>☁️ <span id="cloudStatus">جاري التحقق من الاتصال...</span></span>
 <button type="button" id="syncBtn">🔄 مزامنة الآن</button>
+<button type="button" id="changePasswordBtn">🔑 تغيير كلمة المرور</button>
 <button type="button" id="logoutBtn">تسجيل الخروج</button>
 </div>
 
@@ -368,7 +389,7 @@ body{background:#fff}
 </section>
 </div>
 
-<div class="foot">المختبر المدرسي · نظام إدارة المختبر · الإصدار 0.4</div>
+<div class="foot">المختبر المدرسي · نظام إدارة المختبر · الإصدار 0.5</div>
 </main>
 
 <script>
@@ -630,25 +651,45 @@ loginMessage('أدخل البريد الإلكتروني وكلمة المرور
 return;
 }
 
-$('loginBtn').disabled=true;
-loginMessage('جاري تسجيل الدخول...');
+const btn=$('loginBtn');
+btn.disabled=true;
+btn.textContent='جاري التحقق...';
+loginMessage('جاري الاتصال وتسجيل الدخول...');
 
 try{
-const {data,error}=await supabaseClient.auth.signInWithPassword({
-email,password
-});
+if(!window.supabase||!supabaseClient){
+throw new Error('تعذر تحميل مكتبة Supabase. تحقق من اتصال الإنترنت ثم أعد تحميل الصفحة.');
+}
 
+const loginPromise=supabaseClient.auth.signInWithPassword({email,password});
+const timeoutPromise=new Promise((_,reject)=>setTimeout(()=>reject(new Error('انتهت مهلة تسجيل الدخول. تحقق من الإنترنت وحاول مرة أخرى.')),15000));
+const {data,error}=await Promise.race([loginPromise,timeoutPromise]);
 if(error)throw error;
+if(!data||!data.user)throw new Error('لم يتم استلام بيانات الحساب.');
 
 currentUser=data.user;
+loginMessage('تم تسجيل الدخول بنجاح.','success');
 showLogin(false);
-await initialCloudSync();
+render();
+setCloudStatus('⏳ تم الدخول — جاري مزامنة البيانات بالخلفية...');
+
+// المزامنة لا تمنع فتح البرنامج، وتنتهي بمهلة محددة
+const syncPromise=initialCloudSync();
+const syncTimeout=new Promise((_,reject)=>setTimeout(()=>reject(new Error('انتهت مهلة المزامنة')),20000));
+Promise.race([syncPromise,syncTimeout]).catch(e=>{
+console.warn('Cloud sync timeout/error:',e);
+cloudReady=false;
+setCloudStatus('⚠️ تعذر إكمال المزامنة — بيانات الجهاز محفوظة');
+render();
+});
 
 }catch(e){
-console.error(e);
-loginMessage('تعذر تسجيل الدخول. تأكد من البريد وكلمة المرور.','error');
+console.error('Login error:',e);
+showLogin(true);
+loginMessage('فشل تسجيل الدخول: '+(e.message||'خطأ غير معروف'),'error');
 }finally{
-$('loginBtn').disabled=false;
+btn.disabled=false;
+btn.textContent='تسجيل الدخول';
 }
 };
 
@@ -670,6 +711,49 @@ loginMessage('تم تسجيل الخروج.');
 
 $('syncBtn').onclick=syncNow;
 
+function passwordMessage(msg,type=''){
+$('passwordMessage').textContent=msg;
+$('passwordMessage').className=type;
+}
+
+$('changePasswordBtn').onclick=()=>{
+$('passwordModal').style.display='flex';
+$('currentPassword').value='';
+$('newPassword').value='';
+$('confirmNewPassword').value='';
+passwordMessage('');
+};
+
+$('cancelPasswordBtn').onclick=()=>{
+$('passwordModal').style.display='none';
+};
+
+$('passwordModal').addEventListener('click',e=>{
+if(e.target===$('passwordModal'))$('passwordModal').style.display='none';
+});
+
+$('savePasswordBtn').onclick=async()=>{
+const current=$('currentPassword').value;
+const next=$('newPassword').value;
+const confirmNext=$('confirmNewPassword').value;
+if(!current||!next||!confirmNext){passwordMessage('أكمل جميع الحقول.','error');return;}
+if(next.length<8){passwordMessage('كلمة المرور الجديدة يجب أن تكون 8 أحرف على الأقل.','error');return;}
+if(next!==confirmNext){passwordMessage('كلمتا المرور الجديدتان غير متطابقتين.','error');return;}
+if(next===current){passwordMessage('اختر كلمة مرور مختلفة عن الحالية.','error');return;}
+$('savePasswordBtn').disabled=true;
+passwordMessage('جاري التحقق وتحديث كلمة المرور...');
+try{
+const {error:verifyError}=await supabaseClient.auth.signInWithPassword({email:currentUser.email,password:current});
+if(verifyError)throw new Error('كلمة المرور الحالية غير صحيحة.');
+const {error}=await supabaseClient.auth.updateUser({password:next});
+if(error)throw error;
+passwordMessage('✅ تم تغيير كلمة المرور بنجاح.','success');
+$('currentPassword').value='';$('newPassword').value='';$('confirmNewPassword').value='';
+setTimeout(()=>{$('passwordModal').style.display='none';},1200);
+}catch(err){console.error(err);passwordMessage(err.message||'تعذر تغيير كلمة المرور. حاول مرة أخرى.','error');}
+finally{$('savePasswordBtn').disabled=false;}
+};
+
 /* =========================================================
    تحميل الجلسة الحالية
    ========================================================= */
@@ -682,7 +766,8 @@ if(error)throw error;
 if(data.session){
 currentUser=data.session.user;
 showLogin(false);
-await initialCloudSync();
+render();
+initialCloudSync().catch(e=>{console.error(e);setCloudStatus('⚠️ تعذر مزامنة البيانات — بيانات الجهاز محفوظة');});
 }else{
 showLogin(true);
 setCloudStatus('🔒 سجل الدخول');
