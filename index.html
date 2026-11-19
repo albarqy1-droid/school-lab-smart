@@ -250,9 +250,16 @@ body{background:#fff}
 </details>
 
 <div class="item" style="margin:12px 0">
-<b>📥 استيراد التجارب من ملف</b>
-<p class="muted">Word أو Excel أو PDF. يفضّل أن يكون المحتوى في جدول بعناوين واضحة.</p>
-<input accept=".docx,.xlsx,.xls,.pdf" id="experimentImportFile" type="file"/>
+<b>📥 استيراد التجارب حسب المادة والصف</b>
+<p class="muted">اختر الصف والفصل والمادة التي ينتمي إليها الملف قبل الاستيراد. إذا كان الملف يحتوي هذه البيانات في أعمدته فسيتم اعتمادها، وإلا ستُستخدم اختياراتك أدناه. لن تُنسب التجارب تلقائيًا إلى الكيمياء.</p>
+<div class="row">
+<div><label>صف التجارب المستوردة</label><select id="importExpYear"><option value="السنة الأولى المشتركة">أول ثانوي</option><option value="السنة الثانية – المسار العام">ثاني ثانوي</option><option value="السنة الثالثة – المسار العام">ثالث ثانوي</option></select></div>
+<div><label>الفصل الدراسي</label><select id="importExpTerm"><option>الفصل الأول</option><option>الفصل الثاني</option></select></div>
+</div>
+<label>المادة التي تخصها التجارب</label>
+<select id="importExpSubject"></select>
+<label>ملف التجارب (Word أو Excel أو PDF)</label>
+<input accept=".docx,.xlsx,.xls,.pdf,.csv,.txt,.tsv" id="experimentImportFile" type="file"/>
 <button class="btn secondary" onclick="importExperimentsFile()" type="button">استيراد التجارب</button>
 </div>
 
@@ -862,6 +869,33 @@ setSubjectOptions('eSubject',$('eYear').value,$('eSubject').value,$('eTerm').val
 setSubjectOptions('pSubject',$('pYear').value,$('pSubject').value,$('pTerm').value);
 }
 
+function normalizeImportedSubject(value,year,term,fallback){
+const raw=String(value||'').trim();
+const allowed=subjectsForYear(year,term);
+if(!raw)return allowed.includes(fallback)?fallback:(allowed[0]||'');
+const normalized=importNorm(raw);
+const match=allowed.find(x=>importNorm(x)===normalized);
+if(match)return match;
+const aliases={
+'الكيمياء 1':'كيمياء ١','كيمياء 1':'كيمياء ١','كيمياء١':'كيمياء ١',
+'الفيزياء 1':'فيزياء ١','فيزياء 1':'فيزياء ١','فيزياء١':'فيزياء ١',
+'الاحياء 1':'أحياء ١','احياء 1':'أحياء ١','أحياء١':'أحياء ١',
+'الكيمياء 2':'كيمياء ٢','كيمياء 2':'كيمياء ٢','كيمياء٢':'كيمياء ٢',
+'الفيزياء 2':'فيزياء ٢','فيزياء 2':'فيزياء ٢','فيزياء٢':'فيزياء ٢',
+'الاحياء 2':'أحياء ٢','احياء 2':'أحياء ٢','أحياء٢':'أحياء ٢',
+'الكيمياء 3':'كيمياء ٣','كيمياء 3':'كيمياء ٣','كيمياء٣':'كيمياء ٣',
+'الفيزياء 3':'فيزياء ٣','فيزياء 3':'فيزياء ٣','فيزياء٣':'فيزياء ٣',
+'علوم الارض والفضاء':'علم الأرض والفضاء'
+};
+const alias=aliases[raw]||aliases[normalized]||raw;
+const aliasMatch=allowed.find(x=>importNorm(x)===importNorm(alias));
+return aliasMatch||'';
+}
+
+function refreshImportSubject(){
+setSubjectOptions('importExpSubject',$('importExpYear').value,$('importExpSubject').value,$('importExpTerm').value);
+}
+
 function page(p){
 document.querySelectorAll('.page').forEach(x=>x.classList.toggle('hidden',x.id!==p));
 document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===p));
@@ -896,8 +930,8 @@ $('expList').innerHTML=experiments
 <div class="item">
 <strong>${esc(e.n)}</strong>
 <span class="tag">${esc(subjectForLegacy(e.s,e.y))}</span>
-<span class="tag warn">${esc(e.t)}</span>
-<p class="muted">${esc(e.y)}</p>
+<span class="tag warn">${esc(e.term||'الفصل غير محدد')}</span>
+<p class="muted">${esc(e.y)} · ${esc(e.t)}</p>
 <p class="muted"><b>الأدوات والمواد:</b> ${esc(e.tools)}</p>
 <button class="btn secondary" onclick="useExp(${experiments.indexOf(e)})">إنشاء تحضير لهذه التجربة</button>
 <button class="btn secondary" onclick="editExperiment(${experiments.indexOf(e)})">✏️ تعديل التجربة</button>
@@ -1212,6 +1246,7 @@ notes:$('pNotes').value
 preps.unshift(p);
 put('preps',preps);
 e.target.reset();
+setSubjectOptions('importExpSubject',$('importExpYear').value,'',$('importExpTerm').value);
 setSubjectOptions('eSubject',$('eYear').value,'',$('eTerm').value);
 setSubjectOptions('pSubject',$('pYear').value,'',$('pTerm').value);
 $('pDate').value=new Date().toISOString().slice(0,10);
@@ -1300,6 +1335,8 @@ $('filterSubject').onchange=render;
 $('expSearch').oninput=render;
 $('planYear').onchange=render;
 $('planTerm').onchange=render;
+$('importExpYear').onchange=refreshImportSubject;
+$('importExpTerm').onchange=refreshImportSubject;
 $('eYear').onchange=()=>setSubjectOptions('eSubject',$('eYear').value,'',$('eTerm').value);
 $('eTerm').onchange=()=>setSubjectOptions('eSubject',$('eYear').value,'',$('eTerm').value);
 $('pYear').onchange=()=>setSubjectOptions('pSubject',$('pYear').value,'',$('pTerm').value);
@@ -1501,47 +1538,45 @@ throw Error('الصيغ المدعومة: XLSX وXLS وDOCX وPDF النصي وC
 
 async function importExperimentsFile(){
 const el=$('experimentImportFile'),f=el.files[0];
-
-if(!f){
-alert('اختر ملف التجارب أولاً.');
-return;
-}
-
+if(!f){alert('اختر ملف التجارب أولاً.');return;}
+const selectedYear=$('importExpYear').value;
+const selectedTerm=$('importExpTerm').value;
+const selectedSubject=$('importExpSubject').value;
+if(!selectedSubject){alert('اختر المادة أولاً.');return;}
 try{
 const rows=await readImportFile(f),add=[];
-
 for(const r of rows){
-const n=importPick(r,['اسم التجربه','التجربه','اسم النشاط','العنوان']);
-
-if(n){
-add.push({
-n,
-s:importPick(r,['الماده','المقرر'])||'الكيمياء',
-y:importPick(r,['السنه','الصف','المستوى'])||'السنة الأولى المشتركة',
-t:'مستورد من ملف',
-tools:importPick(r,['الادوات والمواد','الادوات','المواد والادوات','المواد']),
-custom:true
-});
+const n=importPick(r,['اسم التجربه','التجربه','اسم النشاط','العنوان','اسم التجربة']);
+if(!n)continue;
+const rawYear=importPick(r,['السنه','الصف','المستوى','الصف الدراسي']);
+const rawTerm=importPick(r,['الفصل','الفصل الدراسي','الترم']);
+let year=selectedYear;
+if(rawYear){
+const y=importNorm(rawYear);
+if(y.includes('ثالث')||y.includes('الثالث'))year='السنة الثالثة – المسار العام';
+else if(y.includes('ثاني')||y.includes('الثاني'))year='السنة الثانية – المسار العام';
+else if(y.includes('اول')||y.includes('الأول')||y.includes('الاول'))year='السنة الأولى المشتركة';
 }
+let term=selectedTerm;
+if(rawTerm){
+const t=importNorm(rawTerm);
+if(t.includes('ثاني')||t.includes('الثاني')||t==='2')term='الفصل الثاني';
+else if(t.includes('اول')||t.includes('الأول')||t.includes('الاول')||t==='1')term='الفصل الأول';
 }
-
-if(!add.length)
-throw Error('لم أجد تجارب. استخدم عناوين: اسم التجربة، المادة، السنة، الأدوات والمواد.');
-
-if(!confirm('تم العثور على '+add.length+' تجربة. هل تضيفها للمكتبة؟'))
-return;
-
+const rawSubject=importPick(r,['الماده','المقرر','اسم الماده','المادة الدراسية']);
+const subject=normalizeImportedSubject(rawSubject,year,term,selectedSubject);
+if(!subject)continue;
+add.push({n,s:subject,y:year,term,t:'مستورد من ملف',tools:importPick(r,['الادوات والمواد','الادوات','المواد والادوات','المواد','الأدوات والمواد']),custom:true});
+}
+if(!add.length)throw Error('لم أجد تجارب مطابقة. تحقق من اسم عمود التجربة ومن توافق المادة مع الصف والفصل المختارين.');
+if(!confirm('تم العثور على '+add.length+' تجربة. هل تريد حفظها تحت الصف والمادة والفصل المحدد؟'))return;
 customExperiments.push(...add);
 put('experiments',customExperiments);
 experiments=experiments.filter(x=>!x.custom).concat(customExperiments);
-
 render();
-alert('تم استيراد '+add.length+' تجربة بنجاح.');
+alert('تم استيراد '+add.length+' تجربة وربطها بالصف والمادة والفصل الصحيح.');
 el.value='';
-
-}catch(e){
-alert('تعذر الاستيراد: '+e.message+'\nPDF المصور يحتاج إلى OCR ولا يمكن قراءته مباشرة.');
-}
+}catch(e){alert('تعذر الاستيراد: '+e.message+'\nتأكد من وجود عمود باسم التجربة أو اسم النشاط.');}
 }
 
 async function importStockFile(){
@@ -1624,6 +1659,7 @@ alert('تعذر الاستيراد: '+e.message+'\nPDF المصوّر يحتاج
    بدء التشغيل
    ========================================================= */
 
+setSubjectOptions('importExpSubject',$('importExpYear').value,'',$('importExpTerm').value);
 setSubjectOptions('eSubject',$('eYear').value,'',$('eTerm').value);
 setSubjectOptions('pSubject',$('pYear').value,'',$('pTerm').value);
 $('pDate').value=new Date().toISOString().slice(0,10);
