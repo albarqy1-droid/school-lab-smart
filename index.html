@@ -210,7 +210,7 @@ body{background:#fff}
 <h2>الخطط الدراسية</h2>
 <p class="muted">اختر المستوى والفصل لربط التجارب بالمقرر. تُستكمل أسماء الوحدات وأرقام الصفحات بعد إدخال نسخة الكتب المعتمدة للمدرسة.</p>
 <div class="row">
-<div><label>السنة</label><select id="planYear"><option>السنة الأولى المشتركة</option><option>السنة الثانية – المسار العام</option><option>السنة الثالثة – المسار العام</option></select></div>
+<div><label>السنة</label><select id="planYear"><option value="السنة الأولى المشتركة">أول ثانوي</option><option value="السنة الثانية – المسار العام">ثاني ثانوي</option><option value="السنة الثالثة – المسار العام">ثالث ثانوي</option></select></div>
 <div><label>الفصل الدراسي</label><select id="planTerm"><option>الفصل الأول</option><option>الفصل الثاني</option></select></div>
 </div>
 <h3>المقررات العلمية ذات الصلة</h3>
@@ -229,18 +229,20 @@ body{background:#fff}
 <input id="eName" required/>
 <div class="row">
 <div>
-<label>المادة</label>
-<select id="eSubject">
-<option>الكيمياء</option><option>الفيزياء</option><option>الأحياء</option><option>علم البيئة</option><option>علوم الأرض والفضاء</option>
+<label>السنة الدراسية</label>
+<select id="eYear">
+<option value="السنة الأولى المشتركة">أول ثانوي</option>
+<option value="السنة الثانية – المسار العام">ثاني ثانوي</option>
+<option value="السنة الثالثة – المسار العام">ثالث ثانوي</option>
 </select>
 </div>
 <div>
-<label>السنة</label>
-<select id="eYear">
-<option>السنة الأولى المشتركة</option><option>السنة الثانية – المسار العام</option><option>السنة الثالثة – المسار العام</option>
-</select>
+<label>الفصل الدراسي</label>
+<select id="eTerm"><option>الفصل الأول</option><option>الفصل الثاني</option></select>
 </div>
 </div>
+<label>المادة حسب الخطة الدراسية</label>
+<select id="eSubject"></select>
 <label>الأدوات والمواد</label>
 <textarea id="eTools"></textarea>
 <button class="btn primary" type="submit">حفظ التجربة في مكتبتي</button>
@@ -257,7 +259,10 @@ body{background:#fff}
 <div class="row">
 <div><label>المادة</label>
 <select id="filterSubject">
-<option value="الكل">كل المواد</option><option>الكيمياء</option><option>الفيزياء</option><option>الأحياء</option><option>علم البيئة</option><option>علوم الأرض والفضاء</option>
+<option value="الكل">كل المواد</option>
+<option>كيمياء ١</option><option>فيزياء ١</option><option>أحياء ١</option><option>علم البيئة</option>
+<option>كيمياء ٢</option><option>فيزياء ٢</option><option>أحياء ٢</option>
+<option>فيزياء ٣</option><option>كيمياء ٣</option><option>علم الأرض والفضاء</option>
 </select>
 </div>
 <div><label>بحث</label><input id="expSearch" placeholder="اسم التجربة أو المهارة"/></div>
@@ -274,8 +279,8 @@ body{background:#fff}
 <div><label>الفصل الدراسي</label><select id="pTerm"><option>الفصل الأول</option><option>الفصل الثاني</option></select></div>
 </div>
 <div class="row">
-<div><label>السنة</label><select id="pYear"><option>السنة الأولى المشتركة</option><option>السنة الثانية – المسار العام</option><option>السنة الثالثة – المسار العام</option></select></div>
-<div><label>المادة</label><select id="pSubject"><option>الكيمياء</option><option>الفيزياء</option><option>الأحياء</option><option>علم البيئة</option><option>علوم الأرض والفضاء</option></select></div>
+<div><label>السنة</label><select id="pYear"><option value="السنة الأولى المشتركة">أول ثانوي</option><option value="السنة الثانية – المسار العام">ثاني ثانوي</option><option value="السنة الثالثة – المسار العام">ثالث ثانوي</option></select></div>
+<div><label>المادة حسب الخطة الدراسية</label><select id="pSubject"></select></div>
 </div>
 <label>اسم التجربة / الدرس</label>
 <input id="pName" placeholder="اكتب اسم التجربة" required/>
@@ -810,10 +815,52 @@ experiments=experiments.filter(e=>!removedExperiments.includes(expKey(e)));
 function expKey(e){return [e.n,e.s,e.y].join('||')}
 
 const courses={
-'السنة الأولى المشتركة':['الكيمياء 1','الفيزياء 1','الأحياء 1','علم البيئة'],
-'السنة الثانية – المسار العام':['الكيمياء','الأحياء','الفيزياء (بحسب الخطة المعتمدة)'],
-'السنة الثالثة – المسار العام':['الفيزياء','علوم الأرض والفضاء','الكيمياء (بحسب الخطة المعتمدة)']
+'السنة الأولى المشتركة':{
+'الفصل الأول':['كيمياء ١','أحياء ١'],
+'الفصل الثاني':['فيزياء ١','علم البيئة']
+},
+'السنة الثانية – المسار العام':{
+'الفصل الأول':['كيمياء ٢','فيزياء ٢','أحياء ٢'],
+'الفصل الثاني':['كيمياء ٢','أحياء ٢']
+},
+'السنة الثالثة – المسار العام':{
+'الفصل الأول':['فيزياء ٣','كيمياء ٣','علم الأرض والفضاء'],
+'الفصل الثاني':['فيزياء ٣','علم الأرض والفضاء']
+}
 };
+
+function subjectsForYear(year, term='الفصل الأول'){
+return (courses[year] && courses[year][term]) || [];
+}
+
+function setSubjectOptions(selectId, year, selected, term='الفصل الأول'){
+const select=$(selectId);
+if(!select)return;
+const options=subjectsForYear(year,term);
+select.innerHTML=options.length
+?options.map(subject=>`<option value="${esc(subject)}">${esc(subject)}</option>`).join('')
+:'<option value="">لا توجد مواد مسجلة لهذا الفصل</option>';
+if(selected && options.includes(selected)) select.value=selected;
+}
+
+function subjectForLegacy(subject, year){
+const options=subjectsForYear(year);
+if(options.includes(subject)) return subject;
+const legacyMap={
+'الكيمياء': year==='السنة الأولى المشتركة'?'كيمياء ١':year==='السنة الثانية – المسار العام'?'كيمياء ٢':'كيمياء ٣',
+'الفيزياء': year==='السنة الأولى المشتركة'?'فيزياء ١':year==='السنة الثانية – المسار العام'?'فيزياء ٢':'فيزياء ٣',
+'الأحياء': year==='السنة الأولى المشتركة'?'أحياء ١':year==='السنة الثانية – المسار العام'?'أحياء ٢':'الأحياء',
+'الكيمياء 1':'كيمياء ١','الفيزياء 1':'فيزياء ١','الأحياء 1':'أحياء ١',
+'الكيمياء 2':'كيمياء ٢','الفيزياء 2':'فيزياء ٢','الأحياء 2':'أحياء ٢',
+'الكيمياء 3':'كيمياء ٣','الفيزياء 3':'فيزياء ٣'
+};
+return legacyMap[subject] || subject;
+}
+
+function refreshSubjectSelectors(){
+setSubjectOptions('eSubject',$('eYear').value,$('eSubject').value,$('eTerm').value);
+setSubjectOptions('pSubject',$('pYear').value,$('pSubject').value,$('pTerm').value);
+}
 
 function page(p){
 document.querySelectorAll('.page').forEach(x=>x.classList.toggle('hidden',x.id!==p));
@@ -836,18 +883,19 @@ $('recent').innerHTML=preps.slice(0,4).map(p=>
 ).join('')||'<div class="empty">لا توجد تحضيرات مسجلة بعد.</div>';
 
 let y=$('planYear').value||'السنة الأولى المشتركة';
-$('courses').innerHTML=(courses[y]||[]).map(c=>
-`<div class="item"><strong>${esc(c)}</strong><span class="muted">يُربط بالمقرر والفصل بعد مطابقة توزيع المنهج الرسمي.</span></div>`
-).join('');
+let term=$('planTerm').value;
+$('courses').innerHTML=subjectsForYear(y,term).map(c=>
+`<div class="item"><strong>${esc(c)}</strong><span class="muted">مقرر ${esc(term)} حسب القائمة التي زودتني بها.</span></div>`
+).join('')||'<div class="empty">لا توجد مواد مسجلة لهذا الصف والفصل.</div>';
 
 let f=$('filterSubject').value,q=$('expSearch').value.trim();
 
 $('expList').innerHTML=experiments
-.filter(e=>(f==='الكل'||e.s===f)&&(!q||(e.n+e.s).includes(q)))
+.filter(e=>{const shownSubject=subjectForLegacy(e.s,e.y);return (f==='الكل'||shownSubject===f)&&(!q||(e.n+shownSubject).includes(q));})
 .map(e=>`
 <div class="item">
 <strong>${esc(e.n)}</strong>
-<span class="tag">${esc(e.s)}</span>
+<span class="tag">${esc(subjectForLegacy(e.s,e.y))}</span>
 <span class="tag warn">${esc(e.t)}</span>
 <p class="muted">${esc(e.y)}</p>
 <p class="muted"><b>الأدوات والمواد:</b> ${esc(e.tools)}</p>
@@ -892,8 +940,8 @@ return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','
 window.useExp=i=>{
 let e=experiments[i];
 $('pName').value=e.n;
-$('pSubject').value=e.s;
 $('pYear').value=e.y;
+setSubjectOptions('pSubject',e.y,subjectForLegacy(e.s,e.y));
 $('pMaterials').value=e.tools;
 page('prep');
 };
@@ -1164,6 +1212,8 @@ notes:$('pNotes').value
 preps.unshift(p);
 put('preps',preps);
 e.target.reset();
+setSubjectOptions('eSubject',$('eYear').value,'',$('eTerm').value);
+setSubjectOptions('pSubject',$('pYear').value,'',$('pTerm').value);
 $('pDate').value=new Date().toISOString().slice(0,10);
 render();
 alert('تم حفظ التحضير ومزامنته عند الاتصال.');
@@ -1193,6 +1243,7 @@ let x={
 n:$('eName').value.trim(),
 s:$('eSubject').value,
 y:$('eYear').value,
+term:$('eTerm').value,
 t:'أضيفت بواسطة محضر المختبر',
 tools:$('eTools').value,
 custom:true
@@ -1248,6 +1299,11 @@ alert('تعذر قراءة النسخة الاحتياطية. اختر ملف JS
 $('filterSubject').onchange=render;
 $('expSearch').oninput=render;
 $('planYear').onchange=render;
+$('planTerm').onchange=render;
+$('eYear').onchange=()=>setSubjectOptions('eSubject',$('eYear').value,'',$('eTerm').value);
+$('eTerm').onchange=()=>setSubjectOptions('eSubject',$('eYear').value,'',$('eTerm').value);
+$('pYear').onchange=()=>setSubjectOptions('pSubject',$('pYear').value,'',$('pTerm').value);
+$('pTerm').onchange=()=>setSubjectOptions('pSubject',$('pYear').value,'',$('pTerm').value);
 $('planTerm').onchange=render;
 
 $('exportBtn').onclick=()=>{
@@ -1568,6 +1624,8 @@ alert('تعذر الاستيراد: '+e.message+'\nPDF المصوّر يحتاج
    بدء التشغيل
    ========================================================= */
 
+setSubjectOptions('eSubject',$('eYear').value,'',$('eTerm').value);
+setSubjectOptions('pSubject',$('pYear').value,'',$('pTerm').value);
 $('pDate').value=new Date().toISOString().slice(0,10);
 $('lDate').value=new Date().toISOString().slice(0,10);
 $('ocDate').value=new Date().toISOString().slice(0,10);
