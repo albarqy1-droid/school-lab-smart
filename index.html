@@ -991,6 +991,17 @@ const newSubject=prompt('المادة:',e.s);
 if(newSubject===null)return;
 const newYear=prompt('السنة الدراسية:',e.y);
 if(newYear===null)return;
+const currentTerm=e.term||'الفصل الأول';
+const termChoice=prompt('الفصل الدراسي:\nاكتب 1 للفصل الأول أو 2 للفصل الثاني',currentTerm==='الفصل الثاني'?'2':'1');
+if(termChoice===null)return;
+const termValue=termChoice.trim();
+let newTerm;
+if(['1','الفصل الأول','الفصل الاول','الأول','الاول'].includes(termValue))newTerm='الفصل الأول';
+else if(['2','الفصل الثاني','الفصل الثانى','الثاني','الثانى'].includes(termValue))newTerm='الفصل الثاني';
+else{
+alert('قيمة الفصل غير صحيحة. اكتب 1 للفصل الأول أو 2 للفصل الثاني.');
+return;
+}
 const newTools=prompt('الأدوات والمواد:',e.tools);
 if(newTools===null)return;
 
@@ -998,6 +1009,7 @@ const updated={
 n:newName.trim(),
 s:newSubject.trim(),
 y:newYear.trim(),
+term:newTerm,
 t:e.t||'تجربة',
 tools:newTools.trim(),
 custom:true
